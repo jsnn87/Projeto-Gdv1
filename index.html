@@ -4,44 +4,327 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Site com Layout Ajustável</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Estilos gerais */
+        *, *:before, *:after {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+            padding: 0px;
+        }
+
+        /* Layout principal */
+        .main-container {
+            display: flex;
+            height: 95vh;
+        }
+
+        .content {
+            flex: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            padding: 1px;
+        }
+
+        .container {
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(128, 128, 128, 0.3);
+        }
+
+        .flex-container {
+            display: flex;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .left-column {
+            flex: 15%; /* Diminuindo o espaço do Container 2 */
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .right-column {
+            flex: 85%; /* Aumentando o espaço do Container 3 */
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .container2 {
+            flex: 0.5; /* Reduzindo o tamanho do container2 */
+        }
+
+        .container3 {
+            flex: 2.5; /* Aumentando o tamanho proporcional do Container 3 */
+        }
+
+        .container4 {
+            flex: 1;
+        }
+
+        .container5 {
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .container6 {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        /* Estilos responsivos */
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+
+            .content {
+                flex: 100%;
+            }
+
+            .flex-container {
+                flex-direction: column;
+            }
+
+            .left-column, .right-column {
+                flex: 1;
+            }
+
+            .container5 {
+                height: auto;
+                padding: 10px;
+            }
+
+            .container6 {
+                height: auto;
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+            }
+
+            .container {
+                padding: 10px;
+            }
+
+            .container5, .container6 {
+                font-size: 14px;
+            }
+        }
+
+        /* Sidebar */
+        nav {
+            position: fixed;
+            top: 60%;
+            left: 0;
+            transform: translateY(-50%);
+            background: transparent;
+            width: 70px;
+            height: 70%;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        nav ul {
+            text-align: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 12px;
+        }
+
+        nav ul li {
+            position: relative;
+            width: 70px;
+            height: 70px;
+            cursor: pointer;
+            background: crimson;
+            text-transform: uppercase;
+            transition: all 0.4s ease-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        nav ul li:after {
+            position: absolute;
+            background: white;
+            color: crimson;
+            top: 0;
+            left: 70px;
+            width: 70px;
+            height: 100%;
+            opacity: .5;
+            transform: perspective(400px) rotateY(90deg);
+            transform-origin: 0 100%;
+            transition: all 0.4s ease-out;
+        }
+
+        nav ul li:nth-child(1):after {
+            content: "Status";
+            line-height: 88px;
+        }
+        nav ul li:nth-child(2):after {
+            content: "Agenda";
+            line-height: 88px;
+        }
+        nav ul li:nth-child(3):after {
+            content: "Registro";
+            line-height: 85px;
+        }
+        nav ul li:nth-child(4):after {
+            content: "Ação";
+            line-height: 70px;
+        }
+
+        nav ul li:hover {
+            transform: translateX(-70px);
+        }
+
+        nav ul li:hover:after {
+            opacity: 1;
+            transform: perspective(400px) rotateY(0deg) scale(1);
+        }
+
+        nav ul li > div {
+            display: inline-block;
+            padding: 25px 0;
+            background: transparent;
+        }
+
+        nav ul li div {
+            position: relative;
+        }
+
+        .fa-home, .fa-calendar, .fa-clipboard-list, .fa-bullhorn {
+            font-size: 32px;
+            color: white;
+        }
+
+        nav ul li:hover .fa-home,
+        nav ul li:hover .fa-calendar,
+        nav ul li:hover .fa-clipboard-list,
+        nav ul li:hover .fa-bullhorn {
+            color: crimson;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+        }
+
+        /* Seções */
+        section {
+            margin-left: 100px;
+            padding: 20px;
+            display: none;
+        }
+
+        section.active {
+            display: block;
+        }
+
+        nav ul li.active {
+            background-color: #444;
+        }
+
+        /* Estilos do Título */
+        .container5 h2 {
+            font-size: 40px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .container5 .sub-title {
+            font-size: 20px;
+            font-weight: normal;
+            margin-top: 5px;
+        }
+
+        /* Estilos do campo de código de barras */
+        .barcode-field {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .barcode-field input {
+            border: none;
+            outline: none;
+            flex: 1;
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        .barcode-field i {
+            font-size: 20px;
+            color: #888;
+        }
+    </style>
 </head>
 <body>
 
     <!-- Sidebar -->
     <nav>
         <ul>
-            <li id="homeNav" onclick="showPage('home')">
+            <li id="statusNav" onclick="showPage('status')">
                 <div>
                     <i class="fas fa-home"></i>
                 </div>
             </li>
-            <li id="aboutNav" onclick="showPage('about')">
+            <li id="agendaNav" onclick="showPage('agenda')">
                 <div>
-                    <i class="fas fa-user"></i>
+                    <i class="fas fa-calendar"></i>
                 </div>
             </li>
-            <li id="workNav" onclick="showPage('work')">
+            <li id="registroNav" onclick="showPage('registro')">
                 <div>
-                    <i class="fas fa-briefcase"></i>
+                    <i class="fas fa-clipboard-list"></i>
                 </div>
             </li>
-            <li id="contactNav" onclick="showPage('contact')">
+            <li id="acaoNav" onclick="showPage('acao')">
                 <div>
-                    <i class="fas fa-paper-plane"></i>
+                    <i class="fas fa-bullhorn"></i>
                 </div>
             </li>
         </ul>
     </nav>
 
     <!-- Seções -->
-    <section id="home" class="page active">
+    <section id="status" class="page active">
         <div class="main-container">
             <div class="content">
                 <div class="flex-container">
                     <div class="left-column">
                         <div class="container container2">
-                            <h2>Container 2</h2>
+                            <div class="barcode-field">
+                                <i class="fas fa-barcode"></i>
+                                <input type="text" placeholder="Digite o código de barras">
+                            </div>
                         </div>
 
                         <div class="container container3">
@@ -55,7 +338,8 @@
 
                     <div class="right-column">
                         <div class="container container5">
-                            <h2>Container 5</h2>
+                            <h2>SIGA</h2>
+                            <div class="sub-title">Sistema integrado de gestão aplicada</div>
                         </div>
 
                         <div class="container container6">
@@ -67,21 +351,45 @@
         </div>
     </section>
 
-    <section id="about" class="page">
-        <h2>About Page</h2>
-        <p>Conteúdo da página sobre.</p>
+    <section id="agenda" class="page">
+        <h2>Agenda Page</h2>
+        <p>Conteúdo da página agenda.</p>
     </section>
 
-    <section id="work" class="page">
-        <h2>Work Page</h2>
-        <p>Conteúdo da página de trabalho.</p>
+    <section id="registro" class="page">
+        <h2>Registro Page</h2>
+        <p>Conteúdo da página de registro.</p>
     </section>
 
-    <section id="contact" class="page">
-        <h2>Contact Page</h2>
-        <p>Conteúdo da página de contato.</p>
+    <section id="acao" class="page">
+        <h2>Ação Page</h2>
+        <p>Conteúdo da página de ação.</p>
     </section>
 
-    <script src="scripts.js"></script>
+    <script>
+        function showPage(page) {
+            // Remover a classe 'active' de todas as seções
+            var sections = document.querySelectorAll('.page');
+            sections.forEach(function(section) {
+                section.classList.remove('active');
+            });
+
+            // Adicionar a classe 'active' à seção selecionada
+            var activePage = document.getElementById(page);
+            activePage.classList.add('active');
+
+            // Remover a classe 'active' de todos os itens de navegação
+            var navItems = document.querySelectorAll('nav ul li');
+            navItems.forEach(function(item) {
+                item.classList.remove('active');
+            });
+
+            // Adicionar a classe 'active' ao item de navegação correspondente
+            var activeNavItem = document.getElementById(page + "Nav");
+            activeNavItem.classList.add('active');
+        }
+    </script>
+
 </body>
 </html>
+ 
