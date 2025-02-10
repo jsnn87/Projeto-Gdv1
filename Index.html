@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site com Layout Ajustável</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <nav>
+        <ul>
+            <li id="homeNav" onclick="showPage('home')">
+                <div>
+                    <i class="fas fa-home"></i>
+                </div>
+            </li>
+            <li id="aboutNav" onclick="showPage('about')">
+                <div>
+                    <i class="fas fa-user"></i>
+                </div>
+            </li>
+            <li id="workNav" onclick="showPage('work')">
+                <div>
+                    <i class="fas fa-briefcase"></i>
+                </div>
+            </li>
+            <li id="contactNav" onclick="showPage('contact')">
+                <div>
+                    <i class="fas fa-paper-plane"></i>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Seções -->
+    <section id="home" class="page active">
+        <div class="main-container">
+            <div class="content">
+                <div class="flex-container">
+                    <div class="left-column">
+                        <div class="container container2">
+                            <h2>Container 2</h2>
+                        </div>
+
+                        <div class="container container3">
+                            <h2>Container 3</h2>
+                        </div>
+
+                        <div class="container container4">
+                            <h2>Container 4</h2>
+                        </div>
+                    </div>
+
+                    <div class="right-column">
+                        <div class="container container5">
+                            <h2>Container 5</h2>
+                        </div>
+
+                        <div class="container container6">
+                            <h2>Container 6</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="page">
+        <h2>About Page</h2>
+        <p>Conteúdo da página sobre.</p>
+    </section>
+
+    <section id="work" class="page">
+        <h2>Work Page</h2>
+        <p>Conteúdo da página de trabalho.</p>
+    </section>
+
+    <section id="contact" class="page">
+        <h2>Contact Page</h2>
+        <p>Conteúdo da página de contato.</p>
+    </section>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
