@@ -234,9 +234,11 @@
 
         /* Seções */
         section {
-            margin-left: 100px;
+            margin-left: 70px; /* Respeita o espaço do sidebar */
             padding: 20px;
             display: none;
+            height: 100vh; /* Ocupa 100% da altura da tela */
+            
         }
 
         section.active {
@@ -283,6 +285,17 @@
         .barcode-field i {
             font-size: 20px;
             color: #888;
+        }
+
+        /* Novo container para a página Ação */
+        .acao-container {
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(128, 128, 128, 0.3);
         }
     </style>
 </head>
@@ -352,18 +365,24 @@
     </section>
 
     <section id="agenda" class="page">
-        <h2>Agenda Page</h2>
-        <p>Conteúdo da página agenda.</p>
+        <div class="acao-container">
+            <h2>Agenda Page</h2>
+            <p>Conteúdo da página agenda.</p>
+        </div>
     </section>
 
     <section id="registro" class="page">
-        <h2>Registro Page</h2>
-        <p>Conteúdo da página de registro.</p>
+        <div class="acao-container">
+            <h2>Registro Page</h2>
+            <p>Conteúdo da página de registro.</p>
+        </div>
     </section>
 
     <section id="acao" class="page">
-        <h2>Ação Page</h2>
-        <p>Conteúdo da página de ação.</p>
+        <div class="acao-container">
+            <h2>Ação Page</h2>
+            <p>Conteúdo da página de ação.</p>
+        </div>
     </section>
 
     <script>
@@ -392,4 +411,3 @@
 
 </body>
 </html>
- 
