@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -291,58 +292,74 @@
         .acao-container {
             width: 100%;
             height: 100%;
-            padding: 20px;
+            padding: 10px;
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(128, 128, 128, 0.3);
         }
-        /* ///////////////////////////////////////////////////////////*/
+
+        /* Ajustes no container do calendário */
         #calendar-container {
             text-align: center;
+            padding: 20px;
+            width: 100%;
+            max-width: 1200px; /* Aumente o tamanho máximo do calendário */
+            margin: 0 auto; /* Centraliza o calendário */
         }
-        h1 {
-            text-align: center; /* Alinha o título no centro */
-        }
-        .month-name {
-            text-align: center;
-            font-size: 1.5em;
-            margin-bottom: 20px;
-        }
+
+        /* Ajustes no grid do calendário */
         #calendar {
             display: grid;
             grid-template-columns: 1fr repeat(5, 1fr); /* Apenas segunda a sexta */
-            gap: 5px;
+            gap: 9px; /* Aumente o gap entre as células */
             margin: auto;
-            width: 80%;
-            max-width: 700px;
+            width: 100%; /* Ocupa 100% do espaço disponível */
         }
-        .week-number {
-            text-align: center;
-            font-weight: bold;
-            padding: 10px;
-            border-right: 1px solid #ddd;
-            background-color: #f0f0f0;
-        }
+
+        /* Ajustes nas células dos dias */
         .day {
-            padding: 10px;
+            padding: 10px; /* Aumente o padding para melhorar o espaçamento interno */
             text-align: center;
             border: 1px solid #ddd;
             border-radius: 5px;
-            min-height: 50px;
-        }
-        .event {
-            padding: 5px;
-            margin-top: 5px;
-            border-radius: 3px;
-            color: #fff;
-            font-size: 0.8em;
-        }
-        .empty {
-            background-color: #f9f9f9;
-            border: none;
+            min-height: 80px; /* Aumente a altura mínima das células */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
         }
 
+        /* Ajustes nos eventos */
+        .event {
+            padding: 1px; /* Aumente o padding dos eventos */
+            margin-top: 25px;
+            border-radius: 5px; /* Aumente o border-radius para um visual mais suave */
+            color: #fff;
+            font-size: 1.1em; /* Aumente o tamanho da fonte dos eventos */
+            width: 100%; /* Ocupa 100% da largura da célula */
+            height: 60%;
+            text-align:center;
+            padding: 20px;
+        }
+        p {
+            text-align: center; /* Alinha o título no centro */
+            padding: auto;
+        }
+        .month-name {
+            text-align: center;
+            font-size: 3.5em;
+            
+        }
+        .week-number {
+              background-color: #f0f0f0; /* Cor de fundo da coluna da semana */
+              font-weight: bold; /* Texto em negrito */
+              padding: 50px; /* Espaçamento interno */
+              text-align: center; /* Alinhamento do texto ao centro */
+              border: 1px solid #ddd; /* Borda para combinar com o estilo das células dos dias */
+              border-radius: 5px; /* Bordas arredondadas */
+              margin-bottom: 5px; /* Espaçamento inferior para separar as semanas */
+        }
         /* Mapear cores para os tipos de evento */
         .Melhoria-Contínua { background-color: #4CAF50; }
         .Modelagem { background-color: #2196F3; }
@@ -355,8 +372,6 @@
         .Manutenção { background-color: #FF5722; }
         .TO { background-color: #607D8B; }
         .P5S { background-color: #CDDC39; }
-
-           
     </style>
 </head>
 <body>
@@ -426,9 +441,13 @@
 
     <section id="agenda" class="page">
         <div class="acao-container">
-            <h1>Calendário de Eventos</h1>
+           
             <div id="month-name" class="month-name"></div> <!-- Nome do mês -->
-            <div id="calendar"></div>
+            <div id="calendar-container">
+                <P>Calendário de Eventos</p>
+                <div id="calendar"></div>
+                
+            </div>
         </div>
     </section>
 
@@ -468,8 +487,9 @@
             var activeNavItem = document.getElementById(page + "Nav");
             activeNavItem.classList.add('active');
         }
-         // URL da Web App que retorna os dados da planilha
-         const apiUrl = 'https://script.googleusercontent.com/macros/echo?user_content_key=dzy1gc38FUHsb5e-ml7BCO2GJH2fmIxyrTnYRSEze9pzwhbE3RTvAaluaZfS7utO2ytfwfAR64UcTWzaIu8jdYQ9YC04cJfhm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnItQNZIzb0_tPKYOGHX_sPtVqs_oSTB84gB6PYtDPoo8JdpZ6hIMB1lRL_THAglUzEjVoNwdmUNiByQ7Zhfd4uZPW4AB04xCXw&lib=M38UEfXg7dSKGuWguwR6rdUEJGSh9r9J6';
+
+        // URL da Web App que retorna os dados da planilha
+        const apiUrl = 'https://script.googleusercontent.com/macros/echo?user_content_key=dzy1gc38FUHsb5e-ml7BCO2GJH2fmIxyrTnYRSEze9pzwhbE3RTvAaluaZfS7utO2ytfwfAR64UcTWzaIu8jdYQ9YC04cJfhm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnItQNZIzb0_tPKYOGHX_sPtVqs_oSTB84gB6PYtDPoo8JdpZ6hIMB1lRL_THAglUzEjVoNwdmUNiByQ7Zhfd4uZPW4AB04xCXw&lib=M38UEfXg7dSKGuWguwR6rdUEJGSh9r9J6';
 
         function getWeekNumber(date) {
             const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
@@ -560,6 +580,3 @@
 
         getEventsFromSheet();
     </script>
-
-</body>
-</html>
