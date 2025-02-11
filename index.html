@@ -297,6 +297,78 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(128, 128, 128, 0.3);
         }
+        /* ///////////////////////////////////////////////////////////*/
+        #calendar {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            gap: 10px;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center; /* Alinha o título no centro */
+        }
+        .month-name {
+            text-align: center;
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+        .week-number {
+            text-align: center;
+            font-weight: bold;
+            padding: 10px;
+            border-right: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+        .day {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .event {
+            padding: 5px;
+            margin-top: 5px;
+            border-radius: 3px;
+            color: #fff;
+            font-size: 0.9em;
+        }
+
+        /* Mapear cores para os tipos de evento */
+        .Melhoria-Contínua {
+            background-color: #4CAF50; /* Verde */
+        }
+        .Modelagem {
+            background-color: #2196F3; /* Azul */
+        }
+        .Qualidade {
+            background-color: #FF9800; /* Laranja */
+        }
+        .SSMA {
+            background-color: #9C27B0; /* Roxo */
+        }
+        .PCP {
+            background-color: #F44336; /* Vermelho */
+        }
+        .Tempos-Metodos {
+            background-color: #00BCD4; /* Ciano */
+        }
+        .RH {
+            background-color: #3F51B5; /* Azul escuro */
+        }
+        .Laboratório {
+            background-color: #8BC34A; /* Verde claro */
+        }
+        .Manutenção {
+            background-color: #FF5722; /* Laranja escuro */
+        }
+        .TO {
+            background-color: #607D8B; /* Cinza */
+        }
+        .P5S {
+            background-color: #CDDC39; /* Amarelo */
+        }
+
+           
     </style>
 </head>
 <body>
@@ -366,8 +438,9 @@
 
     <section id="agenda" class="page">
         <div class="acao-container">
-            <h2>Agenda Page</h2>
-            <p>Conteúdo da página agenda.</p>
+            <h1>Calendário de Eventos</h1>
+            <div id="month-name" class="month-name"></div> <!-- Nome do mês -->
+            <div id="calendar"></div>
         </div>
     </section>
 
@@ -407,6 +480,102 @@
             var activeNavItem = document.getElementById(page + "Nav");
             activeNavItem.classList.add('active');
         }
+         // URL da Web App que retorna os dados da planilha
+         const apiUrl = 'https://script.googleusercontent.com/macros/echo?user_content_key=dzy1gc38FUHsb5e-ml7BCO2GJH2fmIxyrTnYRSEze9pzwhbE3RTvAaluaZfS7utO2ytfwfAR64UcTWzaIu8jdYQ9YC04cJfhm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnItQNZIzb0_tPKYOGHX_sPtVqs_oSTB84gB6PYtDPoo8JdpZ6hIMB1lRL_THAglUzEjVoNwdmUNiByQ7Zhfd4uZPW4AB04xCXw&lib=M38UEfXg7dSKGuWguwR6rdUEJGSh9r9J6';
+
+// Função para calcular o número da semana do ano
+function getWeekNumber(date) {
+    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+    const startDate = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    return Math.ceil((( (d - startDate) / 86400000) + 1) / 7);
+}
+
+// Função para buscar os dados do Google Apps Script (Web App)
+function getEventsFromSheet() {
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(eventsByDate => {
+            // Preencher o calendário com os eventos
+            generateCalendar(eventsByDate);
+        })
+        .catch(error => console.error('Erro ao buscar dados da API:', error));
+}
+
+// Função para gerar o calendário
+function generateCalendar(eventsByDate) {
+    const calendarElement = document.getElementById('calendar');
+    const monthNameElement = document.getElementById('month-name');
+    const currentDate = new Date();
+    const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+    const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+    const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+    const totalDays = lastDay.getDate();
+    const firstWeekday = firstDay.getDay();
+
+    let currentWeekNumber = 0;
+
+    // Exibir o nome do mês (sem o "Mês: ")
+    monthNameElement.innerText = `${monthNames[currentDate.getMonth()]}`;
+
+    // Adicionar o cabeçalho de semana e dias da semana
+    calendarElement.innerHTML = ""; // Limpa o conteúdo atual do calendário
+    for (let i = 0; i < 1; i++) {
+        const weekHeader = document.createElement('div');
+        weekHeader.classList.add('week-number');
+        weekHeader.innerText = '';
+        calendarElement.appendChild(weekHeader);
+
+        const weekDaysHeader = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+        weekDaysHeader.forEach(day => {
+            const dayHeader = document.createElement('div');
+            dayHeader.classList.add('day');
+            dayHeader.innerText = day;
+            calendarElement.appendChild(dayHeader);
+        });
+    }
+
+    // Adicionar semanas e dias
+    let currentDay = 1;
+    while (currentDay <= totalDays) {
+        const weekNumber = getWeekNumber(new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDay));
+        if (weekNumber !== currentWeekNumber) {
+            // Adiciona o número da semana apenas quando mudar de semana
+            const weekNumberElement = document.createElement('div');
+            weekNumberElement.classList.add('week-number');
+            weekNumberElement.innerText = `Semana ${weekNumber}`;
+            calendarElement.appendChild(weekNumberElement);
+            currentWeekNumber = weekNumber;
+        }
+
+        // Adicionar os dias
+        const daysRow = [];
+        for (let i = 0; i < 7 && currentDay <= totalDays; i++) {
+            const dayElement = document.createElement('div');
+            dayElement.classList.add('day');
+            dayElement.innerHTML = `<strong>${currentDay}</strong>`;
+
+            const dayString = `${currentDay}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
+            if (eventsByDate[dayString]) {
+                eventsByDate[dayString].forEach(event => {
+                    const eventElement = document.createElement('div');
+                    eventElement.classList.add('event');
+                    eventElement.classList.add(event.replace(/ /g, '-')); // Substitui espaços por hífens
+                    eventElement.innerText = event;
+                    dayElement.appendChild(eventElement);
+                });
+            }
+
+            daysRow.push(dayElement);
+            currentDay++;
+        }
+
+        daysRow.forEach(day => calendarElement.appendChild(day));
+    }
+}
+
+// Iniciar a busca pelos eventos ao carregar a página
+getEventsFromSheet();
     </script>
 
 </body>
