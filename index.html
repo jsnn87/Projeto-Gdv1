@@ -135,7 +135,7 @@
         /* Sidebar */
         nav {
             position: fixed;
-            top: 60%;
+            top: 70%;
             left: 0;
             transform: translateY(-50%);
             background: transparent;
@@ -308,7 +308,6 @@
             padding: 40px;
             border-right: 1px solid #ddd;
             background-color: #f0f0f0;
-            
         }
 
         .day {
@@ -319,12 +318,29 @@
             min-height: 50px;
         }
 
+        .day-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .day-header span {
+            text-align: center;
+            font-weight: bold;
+        }
+
         .event {
             padding: 25px;
             margin-top: 5px;
             border-radius: 3px;
             color: #fff;
             font-size: 0.8em;
+            font-size: 18px;
         }
 
         .empty {
@@ -495,10 +511,10 @@
             weekHeader.innerText = "Semana";
             calendarElement.appendChild(weekHeader);
 
-            ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'].forEach(day => {
+            ['SEG', 'TER', 'QUA', 'QUI', 'SEX'].forEach(day => {
                 const dayHeader = document.createElement('div');
-                dayHeader.classList.add('day');
-                dayHeader.innerText = day;
+                dayHeader.classList.add('day-header');
+                dayHeader.innerHTML = `<span>${day}</span>`;
                 calendarElement.appendChild(dayHeader);
             });
 
