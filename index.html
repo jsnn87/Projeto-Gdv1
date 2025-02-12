@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -8,434 +7,342 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         /* Estilos gerais */
-*, *:before, *:after {
-    box-sizing: border-box;
-}
+        *, *:before, *:after {
+            box-sizing: border-box;
+        }
 
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    font-family: Arial, sans-serif;
-    padding: 0px;
-}
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
 
-/* Layout principal */
-.main-container {
-    display: flex;
-    height: 95vh;
-}
+        /* Layout principal */
+        .main-container {
+            display: flex;
+            height: 95vh;
+        }
 
-.content {
-    flex: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-    padding: 1px;
-}
+        .content {
+            flex: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            padding: 1px;
+        }
 
-.container {
-    padding: 30px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(128, 128, 128, 0.3);
-}
+        .container {
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(128, 128, 128, 0.3);
+        }
 
-.flex-container {
-    display: flex;
-    gap: 10px;
-    flex: 1;
-}
+        .flex-container {
+            display: flex;
+            gap: 10px;
+            flex: 1;
+        }
 
-.left-column {
-    flex: 15%; /* Diminuindo o espaço do Container 2 */
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
+        .left-column {
+            flex: 15%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
 
-.right-column {
-    flex: 85%; /* Aumentando o espaço do Container 3 */
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
+        .right-column {
+            flex: 85%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
 
-.container2 {
-    flex: 0.5; /* Reduzindo o tamanho do container2 */
-}
+        .container2 {
+            flex: 0.5;
+        }
 
-.container3 {
-    flex: 2.5; /* Aumentando o tamanho proporcional do Container 3 */
-}
+        .container3 {
+            flex: 2.5;
+        }
 
-.container4 {
-    flex: 1;
-}
+        .container4 {
+            flex: 1;
+        }
 
-.container5 {
-    height: 150px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-}
+        .container5 {
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
 
-.container6 {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-}
+        .container6 {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
 
-/* Sidebar */
-nav {
-    position: fixed;
-    top: 60%;
-    left: 0;
-    transform: translateY(-50%);
-    background: transparent;
-    width: 70px;
-    height: 70%;
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+        /* Estilos responsivos */
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
 
-nav ul {
-    text-align: center;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    font-size: 12px;
-}
+            .content {
+                flex: 100%;
+            }
 
-nav ul li {
-    position: relative;
-    width: 70px;
-    height: 70px;
-    cursor: pointer;
-    background: crimson;
-    text-transform: uppercase;
-    transition: all 0.4s ease-out;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+            .flex-container {
+                flex-direction: column;
+            }
 
-nav ul li:after {
-    position: absolute;
-    background: white;
-    color: crimson;
-    top: 0;
-    left: 70px;
-    width: 70px;
-    height: 100%;
-    opacity: .5;
-    transform: perspective(400px) rotateY(90deg);
-    transform-origin: 0 100%;
-    transition: all 0.4s ease-out;
-}
+            .left-column, .right-column {
+                flex: 1;
+            }
 
-nav ul li:nth-child(1):after {
-    content: "Status";
-    line-height: 88px;
-}
-nav ul li:nth-child(2):after {
-    content: "Agenda";
-    line-height: 88px;
-}
-nav ul li:nth-child(3):after {
-    content: "Registro";
-    line-height: 85px;
-}
-nav ul li:nth-child(4):after {
-    content: "Ação";
-    line-height: 70px;
-}
+            .container5 {
+                height: auto;
+                padding: 10px;
+            }
 
-nav ul li:hover {
-    transform: translateX(-70px);
-}
+            .container6 {
+                height: auto;
+                padding: 10px;
+            }
+        }
 
-nav ul li:hover:after {
-    opacity: 1;
-    transform: perspective(400px) rotateY(0deg) scale(1);
-}
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+            }
 
-nav ul li > div {
-    display: inline-block;
-    padding: 25px 0;
-    background: transparent;
-}
+            .container {
+                padding: 10px;
+            }
 
-nav ul li div {
-    position: relative;
-}
+            .container5, .container6 {
+                font-size: 14px;
+            }
+        }
 
-.fa-home, .fa-calendar, .fa-clipboard-list, .fa-bullhorn {
-    font-size: 32px;
-    color: white;
-}
+        /* Sidebar */
+        nav {
+            position: fixed;
+            top: 60%;
+            left: 0;
+            transform: translateY(-50%);
+            background: transparent;
+            width: 70px;
+            height: 70%;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-nav ul li:hover .fa-home,
-nav ul li:hover .fa-calendar,
-nav ul li:hover .fa-clipboard-list,
-nav ul li:hover .fa-bullhorn {
-    color: crimson;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
-}
+        nav ul {
+            text-align: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 12px;
+        }
 
-/* Seções */
-section {
-    margin-left: 70px; /* Respeita o espaço do sidebar */
-    padding: 20px;
-    display: none;
-    height: 100vh; /* Ocupa 100% da altura da tela */
-    
-}
+        nav ul li {
+            position: relative;
+            width: 70px;
+            height: 70px;
+            cursor: pointer;
+            background: crimson;
+            text-transform: uppercase;
+            transition: all 0.4s ease-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-section.active {
-    display: block;
-}
+        nav ul li:after {
+            position: absolute;
+            background: white;
+            color: crimson;
+            top: 0;
+            left: 70px;
+            width: 70px;
+            height: 100%;
+            opacity: .5;
+            transform: perspective(400px) rotateY(90deg);
+            transform-origin: 0 100%;
+            transition: all 0.4s ease-out;
+        }
 
-nav ul li.active {
-    background-color: #444;
-}
+        nav ul li:nth-child(1):after {
+            content: "Status";
+            line-height: 88px;
+        }
+        nav ul li:nth-child(2):after {
+            content: "Agenda";
+            line-height: 88px;
+        }
+        nav ul li:nth-child(3):after {
+            content: "Registro";
+            line-height: 85px;
+        }
+        nav ul li:nth-child(4):after {
+            content: "Ação";
+            line-height: 70px;
+        }
 
-/* Estilos do Título */
-.container5 h2 {
-    font-size: 40px;
-    font-weight: bold;
-    margin: 0;
-}
+        nav ul li:hover {
+            transform: translateX(-70px);
+        }
 
-.container5 .sub-title {
-    font-size: 20px;
-    font-weight: normal;
-    margin-top: 5px;
-}
+        nav ul li:hover:after {
+            opacity: 1;
+            transform: perspective(400px) rotateY(0deg) scale(1);
+        }
 
-/* Estilos do campo de código de barras */
-.barcode-field {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 5px;
-    width: 100%;
-    max-width: 300px;
-}
+        nav ul li > div {
+            display: inline-block;
+            padding: 25px 0;
+            background: transparent;
+        }
 
-.barcode-field input {
-    border: none;
-    outline: none;
-    flex: 1;
-    padding: 8px;
-    font-size: 16px;
-}
+        nav ul li div {
+            position: relative;
+        }
 
-.barcode-field i {
-    font-size: 20px;
-    color: #888;
-}
+        .fa-home, .fa-calendar, .fa-clipboard-list, .fa-bullhorn {
+            font-size: 32px;
+            color: white;
+        }
 
-/* Novo container para a página Ação */
-.acao-container {
-    width: 100%;
-    height: 100%;
-    padding: 10px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(128, 128, 128, 0.3);
-}
+        nav ul li:hover .fa-home,
+        nav ul li:hover .fa-calendar,
+        nav ul li:hover .fa-clipboard-list,
+        nav ul li:hover .fa-bullhorn {
+            color: crimson;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+        }
 
-/* Ajustes no container do calendário */
-#calendar-container {
-    text-align: center;
-    padding: 20px;
-    width: 100%;
-    max-width: 1200px; /* Aumente o tamanho máximo do calendário */
-    margin: 0 auto; /* Centraliza o calendário */
-}
+        /* Seções */
+        section {
+            margin-left: 70px;
+            padding: 20px;
+            display: none;
+            height: 100vh;
+        }
 
-/* Ajustes no grid do calendário */
-#calendar {
-    display: grid;
-    grid-template-columns: 1fr repeat(5, 1fr); /* Apenas segunda a sexta */
-    gap: 9px; /* Aumente o gap entre as células */
-    margin: auto;
-    width: 100%; /* Ocupa 100% do espaço disponível */
-}
+        section.active {
+            display: block;
+        }
 
-/* Ajustes nas células dos dias */
-.day {
-    padding: 10px; /* Aumente o padding para melhorar o espaçamento interno */
-    text-align: center;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    min-height: 80px; /* Aumente a altura mínima das células */
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-}
+        nav ul li.active {
+            background-color: #444;
+        }
 
-/* Ajustes nos eventos */
-.event {
-    padding: 1px; /* Aumente o padding dos eventos */
-    margin-top: 25px;
-    border-radius: 5px; /* Aumente o border-radius para um visual mais suave */
-    color: #fff;
-    font-size: 1.1em; /* Aumente o tamanho da fonte dos eventos */
-    width: 100%; /* Ocupa 100% da largura da célula */
-    height: 60%;
-    text-align:center;
-    padding: 20px;
-}
-p {
-    text-align: center; /* Alinha o título no centro */
-    padding: auto;
-}
-.month-name {
-    text-align: center;
-    font-size: 3.5em;
-    
-}
-.week-number {
-      background-color: #f0f0f0; /* Cor de fundo da coluna da semana */
-      font-weight: bold; /* Texto em negrito */
-      padding: 50px; /* Espaçamento interno */
-      text-align: center; /* Alinhamento do texto ao centro */
-      border: 1px solid #ddd; /* Borda para combinar com o estilo das células dos dias */
-      border-radius: 5px; /* Bordas arredondadas */
-      margin-bottom: 5px; /* Espaçamento inferior para separar as semanas */
-}
-/* Mapear cores para os tipos de evento */
-.Melhoria-Contínua { background-color: #4CAF50; }
-.Modelagem { background-color: #2196F3; }
-.Qualidade { background-color: #FF9800; }
-.SSMA { background-color: #9C27B0; }
-.PCP { background-color: #F44336; }
-.Crono { background-color: #00BCD4; }
-.RH { background-color: #3F51B5; }
-.Laboratório { background-color: #8BC34A; }
-.Manutencão { background-color: #FF5722; }
-.TO { background-color: #607D8B; }
-.P5S { background-color: #CDDC39; }
+        /* Estilos do Título */
+        .container5 h2 {
+            font-size: 40px;
+            font-weight: bold;
+            margin: 0;
+        }
 
-/* Estilos responsivos */
-@media (max-width: 768px) {
-    .main-container {
-        flex-direction: column;
-    }
+        .container5 .sub-title {
+            font-size: 20px;
+            font-weight: normal;
+            margin-top: 5px;
+        }
 
-    .content {
-        flex: 100%;
-    }
+        /* Novo container para a página Ação */
+        .acao-container {
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(128, 128, 128, 0.3);
+            position: relative; /* Garante que o calendário fique dentro do container */
+            overflow: hidden; /* Impede que o conteúdo saia do container */
+        }
 
-    .flex-container {
-        flex-direction: column;
-    }
+        /* Estilo do calendário */
+        #calendar-container {
+            position: relative; /* Posicionamento relativo ao .acao-container */
+            width: 100%; /* Ocupa 100% da largura do container */
+            height: 100%; /* Ocupa 100% da altura do container */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Alinha o conteúdo ao topo */
+            align-items: center;
+            overflow: auto; /* Adiciona rolagem se necessário */
+        }
 
-    .left-column, .right-column {
-        flex: 1;
-    }
+        .month-name {
+            text-align: center;
+            font-size: 1.5em;
+            margin-bottom: 10px; /* Reduz o espaço abaixo do nome do mês */
+        }
 
-    .container5 {
-        height: auto;
-        padding: 10px;
-    }
+        #calendar {
+            display: grid;
+            grid-template-columns: 1fr repeat(5, 1fr); /* Grade com 6 colunas */
+            gap: 10px; /* Espaçamento entre os elementos ajustado para 60px */
+            margin: auto;
+            width: 100%;
+            max-width: 1400px;
+            height: 100%;
+            max-height: 1000px;
+        }
 
-    .container6 {
-        height: auto;
-        padding: 10px;
-    }
+        .week-number {
+            text-align: center;
+            font-weight: bold;
+            padding: 10px;
+            border-right: 1px solid #ddd;
+            background-color: #f0f0f0;
+        }
 
-    /* Ajustes no calendário para telas menores */
-    #calendar {
-        grid-template-columns: 1fr; /* Uma coluna em telas menores */
-    }
+        .day {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            min-height: 50px;
+        }
 
-    .day {
-        min-height: 60px; /* Reduzir a altura mínima das células */
-        padding: 5px; /* Reduzir o padding */
-    }
+        .event {
+            padding: 5px;
+            margin-top: 5px;
+            border-radius: 3px;
+            color: #fff;
+            font-size: 0.8em;
+        }
 
-    .event {
-        font-size: 0.9em; /* Reduzir o tamanho da fonte dos eventos */
-        padding: 10px; /* Reduzir o padding dos eventos */
-    }
+        .empty {
+            background-color: #f9f9f9;
+            border: none;
+        }
 
-    .month-name {
-        font-size: 2em; /* Reduzir o tamanho da fonte do nome do mês */
-    }
-
-    .week-number {
-        padding: 20px; /* Reduzir o padding da coluna da semana */
-    }
-
-    /* Ajustes no sidebar para telas menores */
-    nav {
-        width: 50px;
-        height: 50%;
-    }
-
-    nav ul li {
-        width: 50px;
-        height: 50px;
-    }
-
-    nav ul li:after {
-        width: 50px;
-        left: 50px;
-    }
-
-    .fa-home, .fa-calendar, .fa-clipboard-list, .fa-bullhorn {
-        font-size: 24px;
-    }
-}
-
-@media (max-width: 480px) {
-    body {
-        padding: 0;
-    }
-
-    .container {
-        padding: 10px;
-    }
-
-    .container5, .container6 {
-        font-size: 14px;
-    }
-
-    /* Ajustes adicionais para telas muito pequenas */
-    .container5 h2 {
-        font-size: 30px;
-    }
-
-    .container5 .sub-title {
-        font-size: 16px;
-    }
-
-    .barcode-field {
-        max-width: 100%; /* Ajustar o campo de código de barras para telas muito pequenas */
-    }
-
-    .barcode-field input {
-        font-size: 14px;
-    }
-
-    .barcode-field i {
-        font-size: 16px;
-    }
-}
+        /* Mapear cores para os tipos de evento */
+        .Melhoria-Contínua { background-color: #4CAF50; }
+        .Modelagem { background-color: #2196F3; }
+        .Qualidade { background-color: #FF9800; }
+        .SSMA { background-color: #9C27B0; }
+        .PCP { background-color: #F44336; }
+        .Crono { background-color: #00BCD4; }
+        .RH { background-color: #3F51B5; }
+        .Laboratório { background-color: #8BC34A; }
+        .Manutenção { background-color: #FF5722; }
+        .TO { background-color: #607D8B; }
+        .P5S { background-color: #CDDC39; }
     </style>
 </head>
 <body>
@@ -505,12 +412,10 @@ p {
 
     <section id="agenda" class="page">
         <div class="acao-container">
-           
-            <div id="month-name" class="month-name"></div> <!-- Nome do mês -->
+            <!-- Removido o H1 -->
             <div id="calendar-container">
-                <P>Calendário de Eventos</p>
+                <div id="month-name" class="month-name"></div>
                 <div id="calendar"></div>
-                
             </div>
         </div>
     </section>
@@ -531,28 +436,23 @@ p {
 
     <script>
         function showPage(page) {
-            // Remover a classe 'active' de todas as seções
             var sections = document.querySelectorAll('.page');
             sections.forEach(function(section) {
                 section.classList.remove('active');
             });
 
-            // Adicionar a classe 'active' à seção selecionada
             var activePage = document.getElementById(page);
             activePage.classList.add('active');
 
-            // Remover a classe 'active' de todos os itens de navegação
             var navItems = document.querySelectorAll('nav ul li');
             navItems.forEach(function(item) {
                 item.classList.remove('active');
             });
 
-            // Adicionar a classe 'active' ao item de navegação correspondente
             var activeNavItem = document.getElementById(page + "Nav");
             activeNavItem.classList.add('active');
         }
 
-        // URL da Web App que retorna os dados da planilha
         const apiUrl = 'https://script.googleusercontent.com/macros/echo?user_content_key=dzy1gc38FUHsb5e-ml7BCO2GJH2fmIxyrTnYRSEze9pzwhbE3RTvAaluaZfS7utO2ytfwfAR64UcTWzaIu8jdYQ9YC04cJfhm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnItQNZIzb0_tPKYOGHX_sPtVqs_oSTB84gB6PYtDPoo8JdpZ6hIMB1lRL_THAglUzEjVoNwdmUNiByQ7Zhfd4uZPW4AB04xCXw&lib=M38UEfXg7dSKGuWguwR6rdUEJGSh9r9J6';
 
         function getWeekNumber(date) {
@@ -587,7 +487,6 @@ p {
             monthNameElement.innerText = `${monthNames[currentDate.getMonth()]}`;
             calendarElement.innerHTML = ""; 
 
-            // Adiciona o cabeçalho das semanas e dias
             const weekHeader = document.createElement('div');
             weekHeader.classList.add('week-number');
             weekHeader.innerText = "Semana";
@@ -600,21 +499,18 @@ p {
                 calendarElement.appendChild(dayHeader);
             });
 
-            let weekStartDay = null;  // Para controlar a primeira data da semana
-            let lastDisplayedWeekNumber = null;  // Controle para evitar repetição do número da semana
+            let weekStartDay = null;
+            let lastDisplayedWeekNumber = null;
 
             for (let day = 1; day <= totalDays; day++) {
                 const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
                 const weekNumber = getWeekNumber(date);
                 const dayOfWeek = date.getDay();
 
-                // Pula sábado (6) e domingo (0)
                 if (dayOfWeek === 0 || dayOfWeek === 6) continue;
 
-                // Não exibe semana que não pertence ao mês
                 if (date.getMonth() !== currentDate.getMonth()) continue;
 
-                // Exibe o número da semana apenas uma vez
                 if (weekNumber !== lastDisplayedWeekNumber) {
                     lastDisplayedWeekNumber = weekNumber;
 
@@ -644,3 +540,6 @@ p {
 
         getEventsFromSheet();
     </script>
+
+</body>
+</html>
