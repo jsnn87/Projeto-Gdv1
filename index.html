@@ -14,7 +14,7 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f8f3f3;
             font-family: Arial, sans-serif;
         }
 
@@ -282,7 +282,7 @@
             flex-direction: column;
             justify-content: flex-start; /* Alinha o conteúdo ao topo */
             align-items: center;
-           
+            visibility: hidden; /* Inicialmente oculto */
         }
 
         .month-name {
@@ -360,6 +360,35 @@
         .Manutenção { background-color: #fd6030; }
         .TO { background-color: #607D8B; }
         .P5S { background-color: #d7ee08; }
+
+        /* Estilo da animação */
+        .loading-animation {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            visibility: visible;
+        }
+
+        /* Estilo da tabela */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #f0f0f0;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #cccccc;
+        }
     </style>
 </head>
 <body>
@@ -429,12 +458,14 @@
 
     <section id="agenda" class="page">
         <div class="acao-container">
-            <!-- Removido o H1 -->
             <div id="calendar-container">
                 <div id="month-name" class="month-name"></div>
                 <p>Calendário de Apresentação de Gerenciamento Diário</p>
                 <div id="calendar"></div>
-                
+                <div class="loading-animation">
+                    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+                    <dotlottie-player src="https://lottie.host/c306cfff-12a7-48cd-a5c4-5bc0f80f6003/6X1VG6ZT4B.lottie" background="transparent" speed="1" style="width: 300px; height: 300px" loop autoplay></dotlottie-player>
+                </div>
             </div>
         </div>
     </section>
@@ -443,6 +474,34 @@
         <div class="acao-container">
             <h2>Registro Page</h2>
             <p>Conteúdo da página de registro.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>O quê?</th>
+                        <th>Como?</th>
+                        <th>Quem?</th>
+                        <th>Quando?</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Item 1</td>
+                        <td>Método 1</td>
+                        <td>Pessoa 1</td>
+                        <td>Data 1</td>
+                        <td>Em andamento</td>
+                    </tr>
+                    <tr>
+                        <td>Item 2</td>
+                        <td>Método 2</td>
+                        <td>Pessoa 2</td>
+                        <td>Data 2</td>
+                        <td>Concluído</td>
+                    </tr>
+                    <!-- Adicione mais linhas conforme necessário -->
+                </tbody>
+            </table>
         </div>
     </section>
 
@@ -486,6 +545,8 @@
                 .then(response => response.json())
                 .then(eventsByDate => {
                     generateCalendar(eventsByDate);
+                    document.querySelector('.loading-animation').style.visibility = 'hidden'; // Oculta a animação após o carregamento
+                    document.getElementById('calendar-container').style.visibility = 'visible'; // Mostra o calendário após o carregamento
                 })
                 .catch(error => console.error('Erro ao buscar dados da API:', error));
         }
