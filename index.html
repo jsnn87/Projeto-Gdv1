@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         /* Estilos gerais */
-        *, *:before, *:after {
+        *,
+        *:before,
+        *:after {
             box-sizing: border-box;
         }
 
@@ -38,6 +41,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(128, 128, 128, 0.3);
+            position: relative;
         }
 
         .flex-container {
@@ -103,7 +107,8 @@
                 flex-direction: column;
             }
 
-            .left-column, .right-column {
+            .left-column,
+            .right-column {
                 flex: 1;
             }
 
@@ -127,7 +132,8 @@
                 padding: 10px;
             }
 
-            .container5, .container6 {
+            .container5,
+            .container6 {
                 font-size: 14px;
             }
         }
@@ -186,14 +192,17 @@
             content: "Status";
             line-height: 88px;
         }
+
         nav ul li:nth-child(2):after {
             content: "Agenda";
             line-height: 88px;
         }
+
         nav ul li:nth-child(3):after {
             content: "Registro";
             line-height: 85px;
         }
+
         nav ul li:nth-child(4):after {
             content: "Ação";
             line-height: 70px;
@@ -208,7 +217,7 @@
             transform: perspective(400px) rotateY(0deg) scale(1);
         }
 
-        nav ul li > div {
+        nav ul li>div {
             display: inline-block;
             padding: 25px 0;
             background: transparent;
@@ -218,7 +227,10 @@
             position: relative;
         }
 
-        .fa-home, .fa-calendar, .fa-clipboard-list, .fa-bullhorn {
+        .fa-home,
+        .fa-calendar,
+        .fa-clipboard-list,
+        .fa-bullhorn {
             font-size: 32px;
             color: white;
         }
@@ -228,7 +240,7 @@
         nav ul li:hover .fa-clipboard-list,
         nav ul li:hover .fa-bullhorn {
             color: crimson;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
         }
 
         /* Seções */
@@ -269,32 +281,42 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(128, 128, 128, 0.3);
-            position: relative; /* Garante que o calendário fique dentro do container */
-            overflow: hidden; /* Impede que o conteúdo saia do container */
+            position: relative;
+            /* Garante que o calendário fique dentro do container */
+            overflow: hidden;
+            /* Impede que o conteúdo saia do container */
         }
 
         /* Estilo do calendário */
         #calendar-container {
-            position: relative; /* Posicionamento relativo ao .acao-container */
-            width: 100%; /* Ocupa 100% da largura do container */
-            height: 90%; /* Ocupa 100% da altura do container */
+            position: relative;
+            /* Posicionamento relativo ao .acao-container */
+            width: 100%;
+            /* Ocupa 100% da largura do container */
+            height: 90%;
+            /* Ocupa 100% da altura do container */
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; /* Alinha o conteúdo ao topo */
+            justify-content: flex-start;
+            /* Alinha o conteúdo ao topo */
             align-items: center;
-            visibility: hidden; /* Inicialmente oculto */
+            visibility: hidden;
+            /* Inicialmente oculto */
         }
 
         .month-name {
             text-align: center;
             font-size: 2.5em;
-            margin-bottom: 1px; /* Reduz o espaço abaixo do nome do mês */
+            margin-bottom: 1px;
+            /* Reduz o espaço abaixo do nome do mês */
         }
 
         #calendar {
             display: grid;
-            grid-template-columns: 1fr repeat(5, 1fr); /* Grade com 6 colunas */
-            gap: 5px; /* Espaçamento entre os elementos ajustado para 60px */
+            grid-template-columns: 1fr repeat(5, 1fr);
+            /* Grade com 6 colunas */
+            gap: 5px;
+            /* Espaçamento entre os elementos ajustado para 60px */
             margin: auto;
             width: 100%;
             max-width: 100%px;
@@ -349,17 +371,49 @@
         }
 
         /* Mapear cores para os tipos de evento */
-        .Melhoria-Contínua { background-color: #4CAF50; }
-        .Modelagem { background-color: #2196F3; }
-        .Qualidade { background-color: #48f051; }
-        .SSMA { background-color: #8927b0; }
-        .PCP { background-color: #f03022; }
-        .Crono { background-color: #55e9e1; }
-        .RH { background-color: #db2fb6; }
-        .Laboratório { background-color: #67814a; }
-        .Manutenção { background-color: #fd6030; }
-        .TO { background-color: #607D8B; }
-        .P5S { background-color: #d7ee08; }
+        .Melhoria-Contínua {
+            background-color: #4CAF50;
+        }
+
+        .Modelagem {
+            background-color: #2196F3;
+        }
+
+        .Qualidade {
+            background-color: #48f051;
+        }
+
+        .SSMA {
+            background-color: #8927b0;
+        }
+
+        .PCP {
+            background-color: #f03022;
+        }
+
+        .Crono {
+            background-color: #55e9e1;
+        }
+
+        .RH {
+            background-color: #db2fb6;
+        }
+
+        .Laboratório {
+            background-color: #67814a;
+        }
+
+        .Manutenção {
+            background-color: #fd6030;
+        }
+
+        .TO {
+            background-color: #607D8B;
+        }
+
+        .P5S {
+            background-color: #d7ee08;
+        }
 
         /* Estilo da animação */
         .loading-animation {
@@ -380,7 +434,8 @@
             margin-top: 20px;
         }
 
-        th, td {
+        th,
+        td {
             padding: 10px;
             border: 1px solid #ddd;
             text-align: center;
@@ -389,8 +444,83 @@
         th {
             background-color: #cccccc;
         }
+        /* Estilo do ícone de adição */
+    .add-icon {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      background-color: crimson;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    /* Estilo do modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 800px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    /* Ajustes para telas menores */
+    @media (max-width: 768px) {
+      .modal-content { width: 90%; }
+    }
+    @media (max-width: 480px) {
+      .modal-content { width: 95%; padding: 15px; }
+      .form-group input,
+      .form-group textarea { padding: 8px; }
+      .form-group button { font-size: 14px; padding: 8px 16px; }
+    }
+    /* Estilo dos campos do modal */
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; margin-bottom: 5px; }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    .form-group.inline { display: flex; justify-content: space-between; }
+    .form-group.inline input#quem { flex-grow: 2; width: 600px; }
+    .form-group.inline input#quando { flex-grow: 1; }
+    .form-group textarea#como { height: 150px; }
+    .form-group button {
+      background-color: crimson;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      display: block;
+      margin: 0 auto;
+    }
+    .form-group button:hover { background-color: darkred; }
     </style>
 </head>
+
 <body>
 
     <!-- Sidebar -->
@@ -463,8 +593,11 @@
                 <p>Calendário de Apresentação de Gerenciamento Diário</p>
                 <div id="calendar"></div>
                 <div class="loading-animation">
-                    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
-                    <dotlottie-player src="https://lottie.host/c306cfff-12a7-48cd-a5c4-5bc0f80f6003/6X1VG6ZT4B.lottie" background="transparent" speed="1" style="width: 300px; height: 300px" loop autoplay></dotlottie-player>
+                    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
+                        type="module"></script>
+                    <dotlottie-player src="https://lottie.host/c306cfff-12a7-48cd-a5c4-5bc0f80f6003/6X1VG6ZT4B.lottie"
+                        background="transparent" speed="1" style="width: 300px; height: 300px" loop
+                        autoplay></dotlottie-player>
                 </div>
             </div>
         </div>
@@ -472,38 +605,40 @@
 
     <section id="registro" class="page">
         <div class="acao-container">
-            <h2>Registro Page</h2>
-            <p>Conteúdo da página de registro.</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>O quê?</th>
-                        <th>Como?</th>
-                        <th>Quem?</th>
-                        <th>Quando?</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Item 1</td>
-                        <td>Método 1</td>
-                        <td>Pessoa 1</td>
-                        <td>Data 1</td>
-                        <td>Em andamento</td>
-                    </tr>
-                    <tr>
-                        <td>Item 2</td>
-                        <td>Método 2</td>
-                        <td>Pessoa 2</td>
-                        <td>Data 2</td>
-                        <td>Concluído</td>
-                    </tr>
-                    <!-- Adicione mais linhas conforme necessário -->
-                </tbody>
-            </table>
+          <h2>Registro Page</h2>
+          <p>Conteúdo da página de registro.</p>
+          <button class="add-icon" onclick="openModal()">+</button>
         </div>
-    </section>
+      </section>
+
+      <!-- Modal -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <h2>Registrar Ação</h2>
+      <form id="acaoForm">
+        <div class="form-group">
+          <label for="oque">O quê?</label>
+          <input type="text" id="oque" placeholder="O quê aconteceu?" required>
+        </div>
+        <div class="form-group">
+          <label for="como">Como?</label>
+          <textarea id="como" placeholder="Descreva o que aconteceu..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="quem">Quem?</label>
+          <input type="text" id="quem" placeholder="Quem?" required>
+        </div>
+        <div class="form-group">
+          <!-- Utilizando input type="datetime-local" para data e hora -->
+          <label for="quando">Quando?</label>
+          <input type="datetime-local" id="quando" required onchange="this.blur()">
+        </div>
+        <div class="form-group">
+          <button type="submit">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
     <section id="acao" class="page">
         <div class="acao-container">
@@ -515,7 +650,7 @@
     <script>
         function showPage(page) {
             var sections = document.querySelectorAll('.page');
-            sections.forEach(function(section) {
+            sections.forEach(function (section) {
                 section.classList.remove('active');
             });
 
@@ -523,7 +658,7 @@
             activePage.classList.add('active');
 
             var navItems = document.querySelectorAll('nav ul li');
-            navItems.forEach(function(item) {
+            navItems.forEach(function (item) {
                 item.classList.remove('active');
             });
 
@@ -537,7 +672,7 @@
             const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
             d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
             const startDate = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-            return Math.ceil((( (d - startDate) / 86400000) + 1) / 7);
+            return Math.ceil((((d - startDate) / 86400000) + 1) / 7);
         }
 
         function getEventsFromSheet() {
@@ -556,7 +691,7 @@
             const monthNameElement = document.getElementById('month-name');
             const currentDate = new Date();
             const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-            
+
             const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
             const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
             const totalDays = lastDay.getDate();
@@ -565,7 +700,7 @@
             let weekHasDates = false;
 
             monthNameElement.innerText = `${monthNames[currentDate.getMonth()]}`;
-            calendarElement.innerHTML = ""; 
+            calendarElement.innerHTML = "";
 
             const weekHeader = document.createElement('div');
             weekHeader.classList.add('week-number');
@@ -619,7 +754,81 @@
         }
 
         getEventsFromSheet();
+        // Função para formatar data para o padrão brasileiro: DD/MM/AAAA HH:mm:ss
+    function formatDateBR(date) {
+      return String(date.getDate()).padStart(2, '0') + '/' +
+             String(date.getMonth() + 1).padStart(2, '0') + '/' +
+             date.getFullYear() + ' ' +
+             String(date.getHours()).padStart(2, '0') + ':' +
+             String(date.getMinutes()).padStart(2, '0') + ':' +
+             String(date.getSeconds()).padStart(2, '0');
+    }
+
+    function openModal() {
+      document.getElementById("myModal").style.display = "block";
+    }
+    function closeModal() {
+      document.getElementById("myModal").style.display = "none";
+    }
+    window.onclick = function (event) {
+      if (event.target == document.getElementById("myModal")) {
+        closeModal();
+      }
+    };
+    // Função para alternar entre as seções
+    function showPage(page) {
+      const pages = document.querySelectorAll("section");
+      pages.forEach(p => p.classList.remove("active"));
+      document.getElementById(page).classList.add("active");
+    }
+    // Enviar dados para o Google Sheets
+    document.getElementById("acaoForm").addEventListener("submit", function (event) {
+      event.preventDefault(); // Impede o envio padrão do formulário
+
+      const oque = document.getElementById("oque").value;
+      const como = document.getElementById("como").value;
+      const quem = document.getElementById("quem").value;
+      const quandoValue = document.getElementById("quando").value;
+      
+      // Converter o valor do input datetime-local para um objeto Date e formatar para o padrão brasileiro
+      const quandoData = new Date(quandoValue);
+      const quandoFormatado = formatDateBR(quandoData);
+      
+      // Registrar a data e hora atual
+      const now = new Date();
+      const nowFormatted = formatDateBR(now);
+      
+      const data = {
+        oque: oque,
+        como: como,
+        quem: quem,
+        quando: quandoFormatado,
+        dataAtual: nowFormatted
+      };
+      
+      // Substitua pela URL do seu Google Apps Script
+      const url = "https://script.google.com/macros/s/AKfycbzwgiucmf9vc7zOUfXRQ6mnS2p6rz1vhP_9JUAuiY0tpPn35vialjFnsy097D801AKl/exec";
+      
+      fetch(url, {
+        method: 'POST',
+        mode: 'no-cors', // Necessário para evitar erros de CORS
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        // Em modo no-cors, a resposta é opaca
+      })
+      .then(text => {
+        closeModal();
+        document.getElementById("acaoForm").reset();
+      })
+      .catch(error => {
+        console.error('Erro:', error);
+        alert('Erro ao salvar os dados: ' + error.message);
+      });
+    });
     </script>
 
 </body>
+
 </html>
