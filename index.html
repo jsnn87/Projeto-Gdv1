@@ -518,6 +518,15 @@
       margin: 0 auto;
     }
     .form-group button:hover { background-color: darkred; }
+    /* Estilo para centralizar a animação */
+    .loading-animation {
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+  width: 100%;
+  height: 100%; /* Ocupa toda a altura do container */
+  margin-top: 1%; 
+}
     </style>
 </head>
 
@@ -606,39 +615,18 @@
     <section id="registro" class="page">
         <div class="acao-container">
           <h2>Registro Page</h2>
-          <p>Conteúdo da página de registro.</p>
+          <!-- Container onde a tabela será inserida -->
+          <div id="registroTableContainer">
+            <div class="loading-animation">
+              <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+              <dotlottie-player src="https://lottie.host/c306cfff-12a7-48cd-a5c4-5bc0f80f6003/6X1VG6ZT4B.lottie"
+                background="transparent" speed="1" style="width: 300px; height: 300px" loop autoplay>
+              </dotlottie-player>
+            </div>
+          </div>
           <button class="add-icon" onclick="openModal()">+</button>
         </div>
       </section>
-
-      <!-- Modal -->
-  <div id="myModal" class="modal">
-    <div class="modal-content">
-      <h2>Registrar Ação</h2>
-      <form id="acaoForm">
-        <div class="form-group">
-          <label for="oque">O quê?</label>
-          <input type="text" id="oque" placeholder="Descreva seu plano e ação." required>
-        </div>
-        <div class="form-group">
-          <label for="como">Como?</label>
-          <textarea id="como" placeholder="Como vai realizar essa ação?" required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="quem">Quem?</label>
-          <input type="text" id="quem" placeholder="Quem irá sem o responsanvél?" required>
-        </div>
-        <div class="form-group">
-          <!-- Utilizando input type="datetime-local" para data e hora -->
-          <label for="quando">Quando?</label>
-          <input type="datetime-local" id="Qual a data de entrega?" required onchange="this.blur()">
-        </div>
-        <div class="form-group">
-          <button type="submit">Salvar</button>
-        </div>
-      </form>
-    </div>
-  </div>
 
     <section id="acao" class="page">
         <div class="acao-container">
@@ -647,7 +635,36 @@
         </div>
     </section>
 
+    <!-- Modal -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <h2>Registrar Ação</h2>
+      <form id="acaoForm">
+        <div class="form-group">
+          <label for="oque">O quê?</label>
+          <input type="text" id="oque" placeholder="O quê aconteceu?" required>
+        </div>
+        <div class="form-group">
+          <label for="como">Como?</label>
+          <textarea id="como" placeholder="Descreva o que aconteceu..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="quem">Quem?</label>
+          <input type="text" id="quem" placeholder="Quem?" required>
+        </div>
+        <div class="form-group">
+          <label for="quando">Quando?</label>
+          <input type="datetime-local" id="quando" required onchange="this.blur()">
+        </div>
+        <div class="form-group">
+          <button type="submit">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
     <script>
+
         function showPage(page) {
             var sections = document.querySelectorAll('.page');
             sections.forEach(function (section) {
@@ -764,6 +781,23 @@
              String(date.getSeconds()).padStart(2, '0');
     }
 
+    // Função auxiliar para garantir a formatação das datas recebidas (quando e dataAtual)
+    function formatBrazilianDate(value) {
+      // Se for um objeto Date, formata diretamente
+      if (value instanceof Date) {
+        return formatDateBR(value);
+      }
+      // Se for uma string com traços (ISO), tenta converter para Date
+      if (typeof value === 'string' && value.indexOf('-') !== -1) {
+        const date = new Date(value);
+        if (!isNaN(date.getTime())) {
+          return formatDateBR(date);
+        }
+      }
+      // Retorna o valor caso já esteja formatado
+      return value;
+    }
+
     function openModal() {
       document.getElementById("myModal").style.display = "block";
     }
@@ -775,29 +809,35 @@
         closeModal();
       }
     };
+
     // Função para alternar entre as seções
     function showPage(page) {
       const pages = document.querySelectorAll("section");
       pages.forEach(p => p.classList.remove("active"));
       document.getElementById(page).classList.add("active");
+      // Se for a página de registro, busca os dados
+      if (page === "registro") {
+        fetchRegistroData();
+      }
     }
-    // Enviar dados para o Google Sheets
+
+    // Envio dos dados do formulário para o Google Sheets (POST)
     document.getElementById("acaoForm").addEventListener("submit", function (event) {
-      event.preventDefault(); // Impede o envio padrão do formulário
+      event.preventDefault();
 
       const oque = document.getElementById("oque").value;
       const como = document.getElementById("como").value;
       const quem = document.getElementById("quem").value;
       const quandoValue = document.getElementById("quando").value;
-      
-      // Converter o valor do input datetime-local para um objeto Date e formatar para o padrão brasileiro
+
+      // Converte o valor do input datetime-local para objeto Date e formata
       const quandoData = new Date(quandoValue);
       const quandoFormatado = formatDateBR(quandoData);
-      
-      // Registrar a data e hora atual
+
+      // Data e hora atual
       const now = new Date();
       const nowFormatted = formatDateBR(now);
-      
+
       const data = {
         oque: oque,
         como: como,
@@ -805,28 +845,74 @@
         quando: quandoFormatado,
         dataAtual: nowFormatted
       };
-      
-      // Substitua pela URL do seu Google Apps Script
-      const url = "https://script.google.com/macros/s/AKfycbzwgiucmf9vc7zOUfXRQ6mnS2p6rz1vhP_9JUAuiY0tpPn35vialjFnsy097D801AKl/exec";
-      
+
+      // URL atualizada do Google Apps Script (POST)
+      const url = "https://script.google.com/macros/s/AKfycbzPnCSGeafVWJo0uHbi1wwPkbT_mozHNVSU7G4CqvbiAq6-0Y8E_oLD2_v7Vuq2cRN3dg/exec";
+
       fetch(url, {
         method: 'POST',
-        mode: 'no-cors', // Necessário para evitar erros de CORS
+        mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       })
       .then(response => {
-        // Em modo no-cors, a resposta é opaca
+        // Em modo no-cors a resposta é opaca
       })
       .then(text => {
         closeModal();
         document.getElementById("acaoForm").reset();
+        // Atualiza a tabela após salvar
+        fetchRegistroData();
       })
       .catch(error => {
         console.error('Erro:', error);
         alert('Erro ao salvar os dados: ' + error.message);
       });
     });
+
+    // Função para buscar os dados do Google Sheets via doGet e preencher a tabela na página Registro
+    function fetchRegistroData() {
+      // URL atualizada do Google Apps Script (GET)
+      const url = "https://script.google.com/macros/s/AKfycbzPnCSGeafVWJo0uHbi1wwPkbT_mozHNVSU7G4CqvbiAq6-0Y8E_oLD2_v7Vuq2cRN3dg/exec";
+      const container = document.getElementById("registroTableContainer");
+
+      fetch(url)
+        .then(response => response.json())
+        .then(result => {
+          if (result.result === "success" && result.data.length > 0) {
+            let table = "<table border='1' style='width:100%; border-collapse:collapse;'>";
+            table += "<thead><tr>";
+            const headers = Object.keys(result.data[0]);
+            headers.forEach(header => {
+              table += "<th style='padding: 8px;'>" + header + "</th>";
+            });
+            table += "</tr></thead>";
+            table += "<tbody>";
+            result.data.forEach(row => {
+              table += "<tr>";
+              headers.forEach(header => {
+                let value = row[header];
+                // Formata os campos "quando" e "dataAtual" para o padrão brasileiro
+                if (header.toLowerCase() === "quando" || header.toLowerCase() === "dataatual") {
+                  value = formatBrazilianDate(value);
+                }
+                table += "<td style='padding: 8px;'>" + value + "</td>";
+              });
+              table += "</tr>";
+            });
+            table += "</tbody></table>";
+            container.innerHTML = table;
+          } else if(result.result === "empty") {
+            container.innerHTML = "<p>Nenhum registro encontrado.</p>";
+          } else {
+            container.innerHTML = "<p>Erro ao carregar os dados.</p>";
+          }
+        })
+        .catch(error => {
+          console.error("Erro ao buscar registros:", error);
+          container.innerHTML = "<p>Erro ao carregar os dados.</p>";
+        });
+    }
     </script>
 
 </body>
