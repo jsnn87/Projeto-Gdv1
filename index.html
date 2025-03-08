@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -1001,6 +1002,161 @@
       margin-left: 10px;
       font-style: italic;
     }
+    /* Container da página agenda */
+    .agenda-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(128, 128, 128, 0.3);
+            position: relative; /* Para posicionar o loader corretamente */
+        }
+
+        /* Fixar o título da tabela */
+        .fixed-title2 {
+            position: sticky;
+            top: 0;
+            background-color: white;
+            z-index: 1;
+            padding: 15px 20px;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f9f9f9;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .fixed-title2 h2 {
+            margin: 0;
+            font-size: 24px;
+            color: #333;
+        }
+
+        /* Ajustes para o calendário */
+        #calendar {
+            flex: 1;
+            overflow: auto;
+            margin-top: 20px;
+        }
+
+        #calendar table {
+            width: 100%;
+            height: 100%;
+            border-collapse: collapse;
+        }
+
+        #calendar th,
+        #calendar td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+
+        #calendar td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+            vertical-align: middle;
+            height: 100px;
+        }
+
+        #calendar td {
+            background-color: #fff;
+            color: #333;
+        }
+
+        #calendar .event-cell {
+            vertical-align: top;
+        }
+
+        #calendar .date-number {
+            font-weight: bold;
+            font-size: 24px;
+            color: #000000;
+        }
+
+        #calendar .event-text {
+            font-size: 44px;
+            font-weight: bold;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50%;
+        }
+
+        /* Estilo para o filtro */
+        .filter-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-container label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .filter-container select {
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+
+        .filter-container select:hover {
+            border-color: #999;
+        }
+
+        .filter-container select:focus {
+            outline: none;
+            border-color: #1E90FF;
+            box-shadow: 0 0 5px rgba(30, 144, 255, 0.5);
+        }
+
+        /* Estilo para as células do número da semana e dos dias da semana */
+        #calendar .week-number,
+        #calendar th {
+            background-color: #f0f0f0; /* Cinza claro */
+            font-size: 18px; /* Tamanho da fonte maior */
+            font-weight: bold; /* Texto em negrito */
+        }
+
+        #calendar .week-number {
+            width: 5%; /* Largura fixa para a célula do número da semana */
+        }
+
+        #calendar th {
+            width: 18%; /* Largura fixa para as células dos dias da semana */
+        }
+
+        /* Estilo para o contêiner de carregamento */
+        .lottie-container2 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.8); /* Fundo branco com 80% de transparência */
+            z-index: 10; /* Garante que fique acima de tudo */
+            border-radius: 10px; /* Bordas arredondadas para combinar com o contêiner */
+        }
+
+        .lottie-container2 dotlottie-player {
+            width: 300px;
+            height: 300px;
+        }
     </style>
 </head>
 
@@ -1057,8 +1213,35 @@
     </section>
 
     <section id="agenda" class="page">
-        <div class="registro-container">
-            <h2>Calendário de Apresentação de Gerenciamento Diário</h2>
+        <div class="agenda-container">
+            <div class="fixed-title2">
+                <h2>Calendário de Apresentação de Gerenciamento Diário</h2>
+                <div class="filter-container">
+                    <label for="monthFilter">Filtrar por mês:</label>
+                    <select id="monthFilter" onchange="loadCalendar()">
+                        <option value="0">Todos os meses</option>
+                        <option value="1">Janeiro</option>
+                        <option value="2">Fevereiro</option>
+                        <option value="3">Março</option>
+                        <option value="4">Abril</option>
+                        <option value="5">Maio</option>
+                        <option value="6">Junho</option>
+                        <option value="7">Julho</option>
+                        <option value="8">Agosto</option>
+                        <option value="9">Setembro</option>
+                        <option value="10">Outubro</option>
+                        <option value="11">Novembro</option>
+                        <option value="12">Dezembro</option>
+                    </select>
+                </div>
+            </div>
+            <div id="calendar"></div>
+            <!-- Contêiner de carregamento -->
+            <div class="lottie-container2" id="lottieLoadingContainer2">
+                <dotlottie-player src="https://lottie.host/c306cfff-12a7-48cd-a5c4-5bc0f80f6003/6X1VG6ZT4B.lottie"
+                    background="transparent" speed="1" style="width: 300px; height: 300px" loop autoplay>
+                </dotlottie-player>
+            </div>
         </div>
     </section>
 
@@ -2144,6 +2327,72 @@
       carregarDadosPlanilha();
       carregarDadosPlanilha2();
     });
+    let allData = {};
+        let eventColors = {
+            "Lean": "#FF8C00",
+            "Qualidade": "#9ACD32",
+            "RH": "#FF0080",
+            "Crono": "#BC8F8F",
+            "Manutenção": "#FFD700",
+            "P5S": "#6959CD",
+            "Laboratório": "#2E8B57",
+            "Modelagem": "#A0522D",
+            "SSMA": "#BA55D3",
+            "TO": "#1E90FF",
+            "PCP": "#FF0000",
+            "-": "#FFFFFF",
+        };
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const currentMonth = new Date().getMonth() + 1;
+            document.getElementById('monthFilter').value = currentMonth;
+            fetchCalendarData();
+        });
+
+        function fetchCalendarData() {
+            // Mostra o loader antes de iniciar o carregamento
+            document.getElementById('lottieLoadingContainer2').style.display = 'flex';
+
+            fetch('https://script.google.com/macros/s/AKfycbz4dnhdAYGL_HdHMO9ypsvNR7LmGxplWuyxNGllpzyI3PjKSD3zsdQz5_4AS8SE0mbL/exec')
+                .then(response => response.json())
+                .then(data => {
+                    allData = data;
+                    loadCalendar();
+                })
+                .catch(error => console.error('Erro ao carregar o calendário:', error))
+                .finally(() => {
+                    // Oculta o loader após o carregamento
+                    document.getElementById('lottieLoadingContainer2').style.display = 'none';
+                });
+        }
+
+        function loadCalendar() {
+            const selectedMonth = parseInt(document.getElementById('monthFilter').value);
+            const calendarDiv = document.getElementById('calendar');
+            calendarDiv.innerHTML = "";
+
+            let table = "<table>";
+            table += "<thead><tr><th>N° Sem</th><th>Segunda</th><th>Terça</th><th>Quarta</th><th>Quinta</th><th>Sexta</th></tr></thead><tbody>";
+
+            Object.keys(allData[selectedMonth] || {}).forEach(weekNumber => {
+                let week = allData[selectedMonth][weekNumber];
+
+                table += `<tr>`;
+                table += `<td class="week-number">${week.weekOfYear}</td>`;
+                [1, 2, 3, 4, 5].forEach(day => {
+                    let event = week.days[day]?.event || "";
+                    let color = eventColors[event] || "#FFFFFF";
+                    let cellContent = week.days[day]
+                        ? `<span class="date-number">${week.days[day].dayNumber}</span><br><span class="event-text">${event}</span>`
+                        : "-";
+                    table += `<td class="event-cell" style="background-color:${color};">${cellContent}</td>`;
+                });
+                table += `</tr>`;
+            });
+
+            table += "</tbody></table>";
+            calendarDiv.innerHTML = table;
+        }
     </script>
 </body>
 
