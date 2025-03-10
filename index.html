@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -1006,6 +1007,7 @@
             font-style: italic;
         }
 
+       
         /* Container da página agenda */
         .agenda-container {
             display: flex;
@@ -1017,11 +1019,10 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(128, 128, 128, 0.3);
             position: relative;
-            /* Para posicionar o loader corretamente */
         }
 
         /* Fixar o título da tabela */
-        .fixed-title2 {
+        .fixed-title {
             position: sticky;
             top: 0;
             background-color: white;
@@ -1035,10 +1036,10 @@
             border-radius: 8px 8px 0 0;
         }
 
-        .fixed-title2 h2 {
+        .fixed-title h2 {
             margin: 0;
             font-size: 24px;
-            color: #0a0a0a;
+            color: #040404;
         }
 
         /* Ajustes para o calendário */
@@ -1071,11 +1072,12 @@
 
         #calendar td {
             background-color: #fff;
-            color: #333;
+            color: #050505;
         }
 
         #calendar .event-cell {
             vertical-align: top;
+            
         }
 
         #calendar .date-number {
@@ -1103,7 +1105,7 @@
 
         .filter-container label {
             font-weight: bold;
-            color: #070707;
+            color: #555;
         }
 
         .filter-container select {
@@ -1112,7 +1114,7 @@
             border: 1px solid #ccc;
             background-color: #fff;
             font-size: 14px;
-            color: #0a0a0a;
+            color: #333;
             cursor: pointer;
             transition: border-color 0.3s ease;
         }
@@ -1123,31 +1125,24 @@
 
         .filter-container select:focus {
             outline: none;
-            border-color: #6f6f70;
-            box-shadow: 0 0 5px rgba(156, 156, 156, 0.5);
+            border-color: #949696;
+            box-shadow: 0 0 5px rgba(192, 191, 191, 0.5);
         }
 
         /* Estilo para as células do número da semana e dos dias da semana */
         #calendar .week-number {
-            width: 80px;
-            /* Largura fixa e reduzida para a coluna N° Sem */
-            background-color: #f0f0f0;
-            /* Cinza claro */
-            font-size: 18px;
-            /* Tamanho da fonte maior */
-            font-weight: bold;
-            /* Texto em negrito */
+            width: 50px; /* Largura fixa e reduzida para a coluna N° Sem */
+            background-color: #a8a6a6; /* Cinza claro */
+            font-size: 18px; /* Tamanho da fonte maior */
+            font-weight: bold; /* Texto em negrito */
+            color: #000000;
         }
 
         #calendar th {
-            width: calc((100% - 80px) / 8);
-            /* Ajuste proporcional para as colunas dos dias da semana */
-            background-color: #f0f0f0;
-            /* Cinza claro */
-            font-size: 18px;
-            /* Tamanho da fonte maior */
-            font-weight: bold;
-            /* Texto em negrito */
+            width: calc((100% - 50px) / 5); /* Ajuste proporcional para as colunas dos dias da semana */
+            background-color: #a8a6a6; /* Cinza claro */
+            font-size: 18px; /* Tamanho da fonte maior */
+            font-weight: bold; /* Texto em negrito */
             color: #000000;
         }
 
@@ -1161,18 +1156,33 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: rgba(255, 255, 255, 0.8);
-            /* Fundo branco com 80% de transparência */
-            z-index: 10;
-            /* Garante que fique acima de tudo */
-            border-radius: 10px;
-            /* Bordas arredondadas para combinar com o contêiner */
+            background-color: rgba(255, 255, 255, 0.8); /* Fundo branco com 80% de transparência */
+            z-index: 10; /* Garante que fique acima de tudo */
+            border-radius: 10px; /* Bordas arredondadas para combinar com o contêiner */
         }
 
         .lottie-container2 dotlottie-player {
             width: 300px;
             height: 300px;
         }
+
+        /* Animação de pulsação para a data e o evento */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        #calendar .pulse {
+            animation: pulse 1.5s infinite; /* Aplica a animação de pulsação */
+        }
+        
     </style>
 </head>
 
@@ -1230,7 +1240,7 @@
 
     <section id="agenda" class="page">
         <div class="agenda-container">
-            <div class="fixed-title2">
+            <div class="fixed-title">
                 <h2>Calendário de Apresentação de Gerenciamento Diário</h2>
                 <div class="filter-container">
                     <label for="monthFilter">Filtrar por mês:</label>
@@ -1253,7 +1263,7 @@
             </div>
             <div id="calendar"></div>
             <!-- Contêiner de carregamento -->
-            <div class="lottie-container2" id="lottieLoadingContainer2">
+            <div class="lottie-container" id="lottieLoadingContainer2">
                 <dotlottie-player src="https://lottie.host/c306cfff-12a7-48cd-a5c4-5bc0f80f6003/6X1VG6ZT4B.lottie"
                     background="transparent" speed="1" style="width: 300px; height: 300px" loop autoplay>
                 </dotlottie-player>
@@ -2395,6 +2405,10 @@
             let table = "<table>";
             table += "<thead><tr><th>N° Sem</th><th>Segunda</th><th>Terça</th><th>Quarta</th><th>Quinta</th><th>Sexta</th></tr></thead><tbody>";
 
+            const today = new Date();
+            const currentDay = today.getDate();
+            const currentMonth = today.getMonth() + 1; // Mês atual (1-12)
+
             Object.keys(allData[selectedMonth] || {}).forEach(weekNumber => {
                 let week = allData[selectedMonth][weekNumber];
 
@@ -2403,8 +2417,11 @@
                 [1, 2, 3, 4, 5].forEach(day => {
                     let event = week.days[day]?.event || "";
                     let color = eventColors[event] || "#FFFFFF";
+                    let dayNumber = week.days[day]?.dayNumber || "";
+                    let isToday = (currentMonth === selectedMonth && dayNumber === currentDay);
+
                     let cellContent = week.days[day]
-                        ? `<span class="date-number">${week.days[day].dayNumber}</span><br><span class="event-text">${event}</span>`
+                        ? `<span class="date-number ${isToday ? 'pulse' : ''}">${dayNumber}</span><br><span class="event-text ${isToday ? 'pulse' : ''}">${event}</span>`
                         : "-";
                     table += `<td class="event-cell" style="background-color:${color};">${cellContent}</td>`;
                 });
