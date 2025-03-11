@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -67,21 +66,95 @@
             gap: 10px;
         }
 
-        .container2,
-        .container3,
-        .container4,
-        .container5,
-        .container6 {
+        .container2 {
+            flex: 0.2;
+            height: 100px;
+        }
+
+        .container3 {
+            flex: 2.5;
+            font-size: 12px;
+            text-align: center;
+
+        }
+
+        .container4 {
             flex: 1;
         }
 
         .container5 {
-            height: 150px;
+            height: 100px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 10px;
+        }
+
+
+        .container6 {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        /* Estilos do Título */
+        .container5 h2 {
+            font-size: 40px;
+            font-weight: bold;
+            margin: 0;
+            text-align: center;
+        }
+
+        .container5 .sub-title {
+            font-size: 20px;
+            font-weight: normal;
+            margin-top: 5px;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                /* Tamanho normal */
+            }
+
+            50% {
+                transform: scale(1.1);
+                /* Aumenta o tamanho em 10% */
+            }
+
+            100% {
+                transform: scale(1);
+                /* Volta ao tamanho normal */
+            }
+        }
+
+        .container4 h2 {
+            margin-top: 0;
+            /* Remove a margem superior padrão */
+            padding-top: 5px;
+            /* Adiciona um espaçamento no topo */
+            text-align: center;
+            /* Centraliza o texto */
+            animation: pulse 0s infinite;
+            /* Aplica a animação */
+            font-size: 18px;
+        }
+
+        .container4 #eventoDoDia {
+            font-size: 40px;
+            /* Tamanho da fonte aumentado */
+            font-weight: bold;
+            /* Texto em negrito */
+            text-align: center;
+            /* Centraliza o texto */
+            animation: pulse 2s infinite;
+            /* Aplica a animação */
+            color: #fff;
         }
 
         /* Sidebar global */
@@ -1007,7 +1080,7 @@
             font-style: italic;
         }
 
-       
+
         /* Container da página agenda */
         .agenda-container {
             display: flex;
@@ -1032,7 +1105,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            
+
             border-radius: 8px 8px 0 0;
         }
 
@@ -1077,7 +1150,7 @@
 
         #calendar .event-cell {
             vertical-align: top;
-            
+
         }
 
         #calendar .date-number {
@@ -1131,19 +1204,27 @@
 
         /* Estilo para as células do número da semana e dos dias da semana */
         #calendar .week-number {
-            width: 50px; /* Largura fixa e reduzida para a coluna N° Sem */
-            background-color: #a8a6a6; /* Cinza claro */
-            font-size: 24px; /* Tamanho da fonte maior */
-            font-weight: bold; /* Texto em negrito */
+            width: 50px;
+            /* Largura fixa e reduzida para a coluna N° Sem */
+            background-color: #a8a6a6;
+            /* Cinza claro */
+            font-size: 24px;
+            /* Tamanho da fonte maior */
+            font-weight: bold;
+            /* Texto em negrito */
             color: #000000;
             color: #;
         }
 
         #calendar th {
-            width: calc((100% - 50px) / 5); /* Ajuste proporcional para as colunas dos dias da semana */
-            background-color: #a8a6a6; /* Cinza claro */
-            font-size: 24px; /* Tamanho da fonte maior */
-            font-weight: bold; /* Texto em negrito */
+            width: calc((100% - 50px) / 5);
+            /* Ajuste proporcional para as colunas dos dias da semana */
+            background-color: #a8a6a6;
+            /* Cinza claro */
+            font-size: 24px;
+            /* Tamanho da fonte maior */
+            font-weight: bold;
+            /* Texto em negrito */
             color: #000000;
         }
 
@@ -1157,9 +1238,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: rgba(255, 255, 255, 0.8); /* Fundo branco com 80% de transparência */
-            z-index: 10; /* Garante que fique acima de tudo */
-            border-radius: 10px; /* Bordas arredondadas para combinar com o contêiner */
+            background-color: rgba(255, 255, 255, 0.8);
+            /* Fundo branco com 80% de transparência */
+            z-index: 10;
+            /* Garante que fique acima de tudo */
+            border-radius: 10px;
+            /* Bordas arredondadas para combinar com o contêiner */
         }
 
         .lottie-container2 dotlottie-player {
@@ -1172,18 +1256,51 @@
             0% {
                 transform: scale(1);
             }
+
             50% {
                 transform: scale(1.3);
             }
+
             100% {
                 transform: scale(1);
             }
         }
 
         #calendar .pulse {
-            animation: pulse 1.5s infinite; /* Aplica a animação de pulsação */
+            animation: pulse 1.5s infinite;
+            /* Aplica a animação de pulsação */
         }
-        
+        .barcode-field {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            /* Espaço entre o ícone e o campo de entrada */
+        }
+
+        .barcode-field input[type="text"] {
+            width: 100%;
+            /* Ajuste a largura conforme necessário */
+            padding: 15px;
+            /* Aumenta o padding para tornar o campo maior */
+            font-size: 14px;
+            /* Aumenta o tamanho da fonte */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+        }
+
+        .barcode-field input[type="text"]:focus {
+            border-color: crimson;
+            outline: none;
+        }
+
+        .barcode-field i.fas.fa-barcode {
+            font-size: 45px;
+            /* Aumente o valor conforme necessário */
+            color: crimson;
+            /* Cor do ícone, se desejar mudar */
+            margin: 0;
+        }
     </style>
 </head>
 
@@ -1215,14 +1332,16 @@
                         <div class="container container2">
                             <div class="barcode-field">
                                 <i class="fas fa-barcode"></i>
-                                <input type="text" placeholder="Digite o código de barras">
+                                <input type="text" id="codigoCracha" placeholder="Digite o código de barras"
+                                    onblur="buscarInformacoes()">
                             </div>
                         </div>
                         <div class="container container3">
-                            <h2>Container 3</h2>
+                            <h2>Presencia Do dia</h2>
                         </div>
                         <div class="container container4">
-                            <h2>Container 4</h2>
+                            <h2>Apresentação do dia</h2>
+                            <p id="eventoDoDia"></p>
                         </div>
                     </div>
                     <div class="right-column">
@@ -1231,7 +1350,7 @@
                             <div class="sub-title">Sistema integrado de gestão aplicada</div>
                         </div>
                         <div class="container container6">
-                            <h2>Container 6</h2>
+                            <h2>Historico de presencias</h2>
                         </div>
                     </div>
                 </div>
@@ -1620,6 +1739,29 @@
                 });
         }
 
+        // Função para calcular a diferença de dias entre duas datas
+        function getDaysDifference(dateString) {
+            const today = new Date();
+            const targetDate = new Date(dateString);
+            const timeDifference = targetDate - today;
+            const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+            return daysDifference;
+        }
+
+        // Função para determinar a cor com base na diferença de dias
+        function getColorBasedOnDate(daysDifference) {
+            if (daysDifference < 0) {
+                return '#FFCCCC'; // Vermelho suave (data passada)
+            } else if (daysDifference <= 3) {
+                return '#FFFFCC'; // Amarelo suave (faltando 3 dias)
+            } else if (daysDifference <= 5) {
+                return '#FFD699'; // Laranja suave (faltando 5 dias)
+            } else {
+                return '#CCFFCC'; // Verde suave (faltando mais de 5 dias)
+            }
+        }
+
+        // Modificar a função renderTable para aplicar as cores na linha inteira
         function renderTable(page, filterMarca = null) {
             const container = document.querySelector("#plano-de-acao-container");
             container.innerHTML = "";
@@ -1659,6 +1801,13 @@
 
             filteredRows.slice(startIndex, endIndex).forEach((row, index) => {
                 const tr = document.createElement("tr");
+
+                // Calcula a diferença de dias para a coluna "Quando" (supondo que seja a 5ª coluna)
+                const daysDifference = getDaysDifference(row[5]);
+                const color = getColorBasedOnDate(daysDifference);
+
+                // Aplica a cor de fundo na linha inteira
+                tr.style.backgroundColor = color;
 
                 // Adiciona as colunas de A a G
                 for (let i = 0; i < 7; i++) {
@@ -1749,7 +1898,7 @@
 
                 // Ícones da coluna Ações
                 actionCell.innerHTML = `
-            <i class="fas fa-eye" data-tooltip="Visualizar" onclick="viewRow(${index})"></i>
+            <i class="fas fa-eye" data-tooltip="Visualizar" onclick="viewRowHistorico(${index})"></i>
         `;
                 tr.appendChild(actionCell);
 
@@ -1758,6 +1907,33 @@
 
             table.appendChild(tbody);
             container.appendChild(table);
+        }
+
+        // Função para visualizar uma linha no modal de histórico
+        function viewRowHistorico(index) {
+            const historicoRows = currentFilter
+                ? allRows.filter(row => row[1] === currentFilter && row[7]) // Verifica se a coluna H (índice 7) está preenchida
+                : allRows.filter(row => row[7]); // Filtra apenas linhas com a coluna H preenchida
+
+            const rowData = historicoRows[index]; // Obtém os dados da linha clicada
+
+            // Verifica se os dados foram encontrados
+            if (!rowData) {
+                showToast("Dados da linha não encontrados.");
+                return;
+            }
+
+            // Preenche os campos do modal de visualização
+            document.getElementById("viewMarca").textContent = rowData[1] || "N/A";
+            document.getElementById("viewOQue").textContent = rowData[2] || "N/A";
+            document.getElementById("viewComo").textContent = rowData[3] || "N/A";
+            document.getElementById("viewQuem").textContent = rowData[4] || "N/A";
+            document.getElementById("viewQuando").textContent = formatDateToDisplay(rowData[5]) || "N/A";
+            document.getElementById("viewDataRegistro").textContent = formatDateToDisplay(rowData[6]) || "N/A";
+
+            // Abre o modal de visualização
+            openViewModal();
+            closeHistoricoModal();
         }
 
         function updatePagination() {
@@ -1846,13 +2022,23 @@
 
         // Visualiza uma linha
         function viewRow(index) {
-            const rowData = filteredRows[index];
-            document.getElementById("viewMarca").textContent = rowData[1];
-            document.getElementById("viewOQue").textContent = rowData[2];
-            document.getElementById("viewComo").textContent = rowData[3];
-            document.getElementById("viewQuem").textContent = rowData[4];
-            document.getElementById("viewQuando").textContent = formatDateToDisplay(rowData[5]);
-            document.getElementById("viewDataRegistro").textContent = formatDateToDisplay(rowData[6]);
+            const rowData = filteredRows[index]; // Obtém os dados da linha clicada
+
+            // Verifica se os dados foram encontrados
+            if (!rowData) {
+                showToast("Dados da linha não encontrados.");
+                return;
+            }
+
+            // Preenche os campos do modal de visualização
+            document.getElementById("viewMarca").textContent = rowData[1] || "N/A";
+            document.getElementById("viewOQue").textContent = rowData[2] || "N/A";
+            document.getElementById("viewComo").textContent = rowData[3] || "N/A";
+            document.getElementById("viewQuem").textContent = rowData[4] || "N/A";
+            document.getElementById("viewQuando").textContent = formatDateToDisplay(rowData[5]) || "N/A";
+            document.getElementById("viewDataRegistro").textContent = formatDateToDisplay(rowData[6]) || "N/A";
+
+            // Abre o modal de visualização
             openViewModal();
         }
 
@@ -2109,6 +2295,10 @@
                     });
             }
         }
+
+
+        /////////////////// Acompanhamento////////////////////////////
+
         let dadosTabela = []; // Variável global para armazenar os dados da tabela
         let cabecalho = []; // Variável global para armazenar o cabeçalho da tabela
 
@@ -2359,6 +2549,10 @@
             carregarDadosPlanilha();
             carregarDadosPlanilha2();
         });
+
+
+
+        ///////////////Calendario////////////////////
         let allData = {};
         let eventColors = {
             "Lean": "#FF8C00",
@@ -2431,6 +2625,153 @@
 
             table += "</tbody></table>";
             calendarDiv.innerHTML = table;
+        }
+
+
+        /////// Status///////
+
+
+        // Função para buscar o evento do dia
+        function buscarEventoDoDia() {
+            const dataAtual = new Date();
+            const dia = String(dataAtual.getDate()).padStart(2, '0'); // Dia com dois dígitos
+            const mes = String(dataAtual.getMonth() + 1); // Mês sem zero à esquerda
+            const mesComZero = String(dataAtual.getMonth() + 1).padStart(2, '0'); // Mês com zero à esquerda
+            const ano = dataAtual.getFullYear();
+            const dataFormatada = `${dia}/${mesComZero}/${ano}`; // Formato DD/MM/YYYY
+
+            // Mapeamento de eventos para cores
+            const coresEventos = {
+                "Lean": "#FF8C00",
+                "Qualidade": "#9ACD32",
+                "RH": "#FF0080",
+                "Crono": "#BC8F8F",
+                "Manutenção": "#FFD700",
+                "P5S": "#6959CD",
+                "Laboratório": "#2E8B57",
+                "Modelagem": "#A0522D",
+                "SSMA": "#BA55D3",
+                "TO": "#1E90FF",
+                "PCP": "#FF0000",
+                "-": "#FFFFFF" // Cor padrão para eventos não mapeados
+            };
+
+            const url = 'https://script.google.com/macros/s/AKfycbz4dnhdAYGL_HdHMO9ypsvNR7LmGxplWuyxNGllpzyI3PjKSD3zsdQz5_4AS8SE0mbL/exec';
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro na requisição: ' + response.statusText);
+                    }
+                    return response.json(); // Converte a resposta para JSON
+                })
+                .then(data => {
+                    console.log('Dados recebidos:', data); // Debug: Verifique os dados recebidos
+
+                    if (data && typeof data === 'object') {
+                        // Tenta acessar o mês com e sem zero à esquerda
+                        const mesAtual = data[mes] || data[mesComZero];
+
+                        if (mesAtual) {
+                            let eventoDoDia = null;
+
+                            // Itera sobre as semanas do mês
+                            Object.keys(mesAtual).forEach(semana => {
+                                const dias = mesAtual[semana].days;
+                                // Itera sobre os dias da semana
+                                Object.keys(dias).forEach(dia => {
+                                    if (dias[dia] && dias[dia].date === dataFormatada) {
+                                        eventoDoDia = dias[dia].event;
+                                    }
+                                });
+                            });
+
+                            const elementoEvento = document.getElementById('eventoDoDia');
+                            const container4 = document.querySelector('.container4'); // Seleciona o container4
+
+                            if (eventoDoDia) {
+                                elementoEvento.textContent = eventoDoDia;
+
+                                // Define a cor de fundo com base no evento
+                                const corEvento = coresEventos[eventoDoDia] || coresEventos["-"];
+                                container4.style.backgroundColor = corEvento;
+                            } else {
+                                elementoEvento.textContent = 'Nenhum evento encontrado para hoje.';
+                                container4.style.backgroundColor = coresEventos["-"]; // Cor padrão
+                            }
+                        } else {
+                            throw new Error('Mês atual não encontrado nos dados.');
+                        }
+                    } else {
+                        throw new Error('Formato de dados inválido. Esperado: um objeto com meses e semanas.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar evento:', error);
+                    document.getElementById('eventoDoDia').textContent = 'Erro ao carregar o evento. Verifique o console para mais detalhes.';
+                    document.querySelector('.container4').style.backgroundColor = coresEventos["-"]; // Cor padrão
+                });
+        }
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function () {
+            buscarEventoDoDia(); // Busca o evento ao carregar a página
+        });
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function () {
+            buscarEventoDoDia(); // Busca o evento ao carregar a página
+
+            // Adiciona um evento de clique para cada item do menu
+            const menuItems = document.querySelectorAll('.status-sidebar ul li');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function () {
+                    menuItems.forEach(menuItem => {
+                        menuItem.classList.remove('selecionado');
+                    });
+                    this.classList.add('selecionado');
+                });
+            });
+        });
+
+
+        // Função para buscar as informações do crachá
+        // Função para buscar as informações do crachá
+        function buscarInformacoes() {
+            var codigoCracha = document.getElementById('codigoCracha').value;
+
+            if (!codigoCracha) {
+                alert("Por favor, digite o código do crachá.");
+                return;
+            }
+
+            var url = 'https://script.google.com/macros/s/AKfycbzolrtldazXjNsiZSGGqncRKaJjRxCL4aOw9a17pMHafjskN0QNDco3M_p89Qc55dM8/exec'; // Substitua pela sua URL do Apps Script
+
+            var data = {
+                action: 'buscarInformacoesCracha',
+                codigoCracha: codigoCracha
+            };
+
+            fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                mode: 'cors' // Use 'cors' para permitir requisições cross-origin
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Dados recebidos:', data); // Debug: Verifique os dados recebidos
+                    if (data.success) {
+                        alert("Informações salvas com sucesso!");
+                    } else {
+                        alert("Código do crachá não encontrado.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar dados:', error);
+                    alert("Erro ao buscar dados.");
+                });
         }
     </script>
 </body>
