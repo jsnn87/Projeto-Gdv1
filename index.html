@@ -2154,6 +2154,14 @@
             });
         });
 
+        function limparCamposFormulario() {
+            document.getElementById('marca').value = '';
+            document.getElementById('oQue').value = '';
+            document.getElementById('como').value = '';
+            document.getElementById('quem').value = '';
+            document.getElementById('quando').value = '';
+        }
+
         function submitAction() {
             const actionForm = document.getElementById('actionForm');
             const marca = actionForm.marca.value;
@@ -2189,6 +2197,7 @@
             }).then(response => {
                 console.log('Success:', response);
                 closeModal();
+                limparCamposFormulario(); // Limpa os campos do formulário
                 fetchDataAndRenderTable(); // Atualiza a tabela após salvar
                 showToast("Ação registrada com sucesso!");
             }).catch(error => {
