@@ -1750,7 +1750,7 @@
 
        // Função para determinar a cor com base na diferença de dias
         function getColorBasedOnDate(daysDifference) {
-            if (daysDifference < 0) {
+            if (daysDifference <= 0) {
                 return '#FFCCCC'; // Vermelho suave (data passada)
             } else if (daysDifference <= 3) {
                 return '#FFE4B5'; // Amarelo suave (faltando 3 dias)
