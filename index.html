@@ -2801,6 +2801,9 @@
                     console.log('Dados enviados para salvar.');
                     // Exibe a mensagem de sucesso com o nome incluído
                     showFeedback(`${data.Nome}`, 'success');
+                    fetchNames(); // Carrega os nomes da aba 'Calendário'
+                    applyColor();
+                    
                 })
                 .catch(error => {
                     console.error('Erro ao salvar dados:', error);
