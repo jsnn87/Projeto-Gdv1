@@ -1301,6 +1301,53 @@
             /* Cor do ícone, se desejar mudar */
             margin: 0;
         }
+        .quadrados-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            /* Espaçamento entre os quadrados */
+            margin-top: 20px;
+        }
+
+        .quadrados-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            /* Espaçamento entre os quadrados */
+            margin-top: 20px;
+        }
+
+        .quadrado {
+            width: calc(50% - 5px);
+            /* Dois quadrados por linha com espaçamento */
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            /* Bordas arredondadas */
+            background-color: #e0e0e0;
+            /* Cor de fundo */
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Sombra suave */
+        }
+
+        .quadrado:nth-child(even) {
+            background-color: #e0e0e0;
+            /* Cor de fundo alternada */
+        }
+
+        .quadrado:hover {
+            background-color: #d1d1d1;
+            /* Cor de fundo ao passar o mouse */
+        }
+
+        /* Estilo para o quadrado verde */
+        .green {
+            background-color: #28a745 !important;
+            /* Cor verde para o fundo */
+            color: white !important;
+            /* Texto branco */
+        }
     </style>
 </head>
 
@@ -1340,8 +1387,10 @@
                             <h2>Presencia Do dia</h2>
                         </div>
                         <div class="container container4">
-                            <h2>Apresentação do dia</h2>
-                            <p id="eventoDoDia"></p>
+                            <h2>Presença do dia</h2>
+                            <div class="quadrados-container" id="quadradosContainer">
+                                <!-- Os quadrados serão inseridos aqui via JavaScript -->
+                            </div>
                         </div>
                     </div>
                     <div class="right-column">
