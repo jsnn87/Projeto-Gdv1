@@ -1275,16 +1275,12 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            /* Espaço entre o ícone e o campo de entrada */
         }
 
         .barcode-field input[type="text"] {
             width: 100%;
-            /* Ajuste a largura conforme necessário */
             padding: 15px;
-            /* Aumenta o padding para tornar o campo maior */
-            font-size: 14px;
-            /* Aumenta o tamanho da fonte */
+            font-size: 12px;
             border: 1px solid #ccc;
             border-radius: 5px;
             transition: border-color 0.3s ease;
@@ -1297,10 +1293,38 @@
 
         .barcode-field i.fas.fa-barcode {
             font-size: 45px;
-            /* Aumente o valor conforme necessário */
             color: crimson;
-            /* Cor do ícone, se desejar mudar */
-            margin: 0;
+        }
+
+        /* Feedback visual */
+        .feedback {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px 40px;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            z-index: 1000;
+            display: none;
+            opacity: 1;
+            transition: opacity 1s ease-out;
+        }
+
+        .feedback.success {
+            color: #4CAF50;
+        }
+
+        .feedback.warning {
+            color: #FFC107;
+        }
+
+        .feedback.error {
+            color: #f44336;
         }
         .quadrados-container {
             display: flex;
@@ -1380,8 +1404,7 @@
                         <div class="container container2">
                             <div class="barcode-field">
                                 <i class="fas fa-barcode"></i>
-                                <input type="text" id="codigoCracha" placeholder="Digite o código de barras"
-                                    onblur="buscarInformacoes()">
+                                <input type="text" id="barcodeInput" placeholder="Digite o código de barras">
                             </div>
                         </div>
                         <div class="container container3">
@@ -1672,6 +1695,9 @@
             <div id="tabela-producao"></div>
         </div>
     </section>
+
+    <!-- Feedback visual -->
+    <div id="feedback" class="feedback"></div>
 
     <script>
         let allRows = []; // Armazena todas as linhas da tabela
@@ -2691,8 +2717,100 @@
 
         /////// Status///////
 
-  // Inicia a captura do input do código de barras
-  document.addEventListener('DOMContentLoaded', function () {
+        // Inicia a captura do input do código de barras
+        document.addEventListener('DOMContentLoaded', function () {
+            const barcodeInput = document.querySelector('.barcode-field input[type="text"]');
+            barcodeInput.addEventListener('input', function (event) {
+                const barcodeValue = event.target.value;
+                if (barcodeValue) {
+                    fetchDataAndSave(barcodeValue);
+                }
+            });
+
+            // Busca o evento do dia ao carregar a página
+            buscarEventoDoDia();
+        });
+
+        // Função para exibir feedback visual
+        function showFeedback(message, type) {
+            const feedback = document.getElementById('feedback');
+            feedback.textContent = message;
+            feedback.classList.remove('success', 'warning', 'error');
+            feedback.classList.add(type);
+            feedback.style.display = 'block';
+            feedback.style.opacity = '1';
+
+            // Limpa o input
+            document.getElementById('barcodeInput').value = '';
+
+            // Oculta o feedback após 5 segundos com efeito de fade out
+            setTimeout(() => {
+                feedback.style.opacity = '0';
+                setTimeout(() => {
+                    feedback.style.display = 'none';
+                }, 1000); // Tempo do fade out
+            }, 2000); // Tempo de exibição do feedback
+        }
+
+        // Função para buscar os dados na API usando o parâmetro "barcode"
+        function fetchDataAndSave(barcode) {
+            const url = `https://script.google.com/macros/s/AKfycbzYmFNjueU5Gf3uFrukyfzdVnHS2ha6sRrsnoV7BaWAq3tjnQE6ccMzMPw67vTlu2tf/exec?barcode=${barcode}`;
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro na requisição: ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Dados recebidos:', data);
+                    // Se o registro foi encontrado (data não é vazio e possui propriedade "cracha")
+                    if (data && data.cracha) {
+                        saveDataToSheet(data); // Salva os dados e exibe a mensagem de sucesso
+                    } else {
+                        // Exibe "Código de barras não encontrado" se o cracha não for encontrado
+                        showFeedback('Código de barras não encontrado.', 'warning');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar dados:', error);
+                    showFeedback('Erro ao buscar dados.', 'error');
+                });
+        }
+
+        // Função para salvar os dados na planilha "base_dados_status"
+        function saveDataToSheet(data) {
+            const urlPost = 'https://script.google.com/macros/s/AKfycbzYmFNjueU5Gf3uFrukyfzdVnHS2ha6sRrsnoV7BaWAq3tjnQE6ccMzMPw67vTlu2tf/exec';
+            const postData = {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'saveStatus',
+                    nome: data.Nome,
+                    celula: data.Célula,
+                    funcao: data.Função,
+                    setor: data.Setor,
+                    predio: data.Predio,
+                    cracha: data.cracha,
+                    dataAtual: new Date().toLocaleDateString('pt-BR') // Data atual formatada como dd/mm/aa
+                })
+            };
+            fetch(urlPost, postData)
+                .then(response => {
+                    console.log('Dados enviados para salvar.');
+                    // Exibe a mensagem de sucesso com o nome incluído
+                    showFeedback(`${data.Nome}`, 'success');
+                })
+                .catch(error => {
+                    console.error('Erro ao salvar dados:', error);
+                    showFeedback('Erro ao salvar dados.', 'error');
+                });
+        }
+        ///////////////////////////////////////////////////////////////Status////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // Inicia a captura do input do código de barras
+        document.addEventListener('DOMContentLoaded', function () {
             const barcodeInput = document.querySelector('.barcode-field input[type="text"]');
             barcodeInput.addEventListener('input', function (event) {
                 const barcodeValue = event.target.value;
@@ -2858,11 +2976,11 @@
             try {
                 const response = await fetch(url);
                 const data = await response.json();
-    
+
                 // Exibe os dados nos quadrados
                 const quadradosContainer = document.getElementById('quadradosContainer');
                 quadradosContainer.innerHTML = ''; // Limpa antes de adicionar novos dados
-    
+
                 // Adiciona os quadrados com os nomes
                 data.data.forEach((name) => {
                     if (name.toLowerCase() !== "feriado") { // Ignora o nome "Feriado"
@@ -2876,20 +2994,20 @@
                 console.error('Erro ao buscar dados:', error);
             }
         }
-    
+
         // Função para aplicar a cor verde aos quadrados de hoje
         async function applyColor() {
             const url = 'https://script.google.com/macros/s/AKfycbybn_QkcpCJBfvNjpKOMoGW-Wxz_H2krx83zyXwANqAP_XYVxqU1x8Ru4vkpHcBm_M4/exec?action=color'; // URL para aplicar cor
             try {
                 const response = await fetch(url);
                 const data = await response.json();
-    
+
                 // Recupera a lista de nomes que devem ser destacados com a cor verde
                 const namesWithGreen = data.data;
-    
+
                 const quadradosContainer = document.getElementById('quadradosContainer');
                 const quadrados = quadradosContainer.getElementsByClassName('quadrado');
-    
+
                 // Adiciona a classe 'green' para os quadrados de nomes com a data de hoje
                 for (let i = 0; i < quadrados.length; i++) {
                     const quadrado = quadrados[i];
@@ -2901,7 +3019,7 @@
                 console.error('Erro ao aplicar cor:', error);
             }
         }
-    
+
         // Chama as funções quando a página carregar
         window.onload = () => {
             fetchNames(); // Carrega os nomes da aba 'Calendário'
