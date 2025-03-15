@@ -1258,7 +1258,7 @@
             }
 
             50% {
-                transform: scale(1.3);
+                transform: scale(1.1);
             }
 
             100% {
@@ -1270,6 +1270,7 @@
             animation: pulse 1.5s infinite;
             /* Aplica a animação de pulsação */
         }
+
         .barcode-field {
             display: flex;
             align-items: center;
@@ -1384,13 +1385,14 @@
                             </div>
                         </div>
                         <div class="container container3">
-                            <h2>Presencia Do dia</h2>
-                        </div>
-                        <div class="container container4">
                             <h2>Presença do dia</h2>
                             <div class="quadrados-container" id="quadradosContainer">
                                 <!-- Os quadrados serão inseridos aqui via JavaScript -->
                             </div>
+                        </div>
+                        <div class="container container4">
+                            <h2>Apresentação do dia</h2>
+                            <p id="eventoDoDia"></p>
                         </div>
                     </div>
                     <div class="right-column">
@@ -1797,14 +1799,14 @@
             return daysDifference;
         }
 
-       // Função para determinar a cor com base na diferença de dias
+        // Função para determinar a cor com base na diferença de dias
         function getColorBasedOnDate(daysDifference) {
-            if (daysDifference <= 0) {
-                return '#ffb7ad'; // Vermelho suave (data passada)
+            if (daysDifference < 0) {
+                return '#FFCCCC'; // Vermelho suave (data passada)
             } else if (daysDifference <= 3) {
-                return '#FFE4B5'; // Amarelo suave (faltando 3 dias)
+                return '#FFFFCC'; // Amarelo suave (faltando 3 dias)
             } else if (daysDifference <= 5) {
-                return ' #FFFFCC'; // Laranja suave (faltando 5 dias)
+                return '#FFD699'; // Laranja suave (faltando 5 dias)
             } else {
                 return '#CCFFCC'; // Verde suave (faltando mais de 5 dias)
             }
@@ -2236,7 +2238,7 @@
             const lottieOtherContainer = document.getElementById('lottieOtherContainer');
             lottieOtherContainer.classList.add('show');
 
-            fetch('https://script.google.com/macros/s/AKfycbxq1IMpSn8b2-xRzbxVwf_8JCMe1o0qxlAPo-AhfNqaQ9xFbwTzl8CGkV1qvurPahADAA/exec', {
+            fetch('https://script.google.com/macros/s/AKfycbxA0tx3syUp1XAm4uOn28HkQwqB6vqWZmL0gyQ3C6Pbg3T_Bdq1xMCO8Le5O0WvOILrhg/exec', {
                 method: 'POST',
                 mode: 'no-cors',
                 body: JSON.stringify(formData),
@@ -2248,7 +2250,6 @@
                 closeModal();
                 limparCamposFormulario(); // Limpa os campos do formulário
                 fetchDataAndRenderTable(); // Atualiza a tabela após salvar
-                getColorBasedOnDate();
                 showToast("Ação registrada com sucesso!");
             }).catch(error => {
                 console.error('Error:', error);
@@ -2626,6 +2627,7 @@
             "TO": "#1E90FF",
             "PCP": "#FF0000",
             "FERIADO": "#000000",
+            "FERIADO": "#000000",
         };
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -2689,8 +2691,8 @@
 
         /////// Status///////
 
-        // Inicia a captura do input do código de barras
-        document.addEventListener('DOMContentLoaded', function () {
+  // Inicia a captura do input do código de barras
+  document.addEventListener('DOMContentLoaded', function () {
             const barcodeInput = document.querySelector('.barcode-field input[type="text"]');
             barcodeInput.addEventListener('input', function (event) {
                 const barcodeValue = event.target.value;
