@@ -2811,7 +2811,7 @@
                 });
         }
          
-     ///////////////////////////////////////////////////////////////Status////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      ///////////////////////////////////////////////////////////////Status////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // Inicia a captura do input do código de barras
         document.addEventListener('DOMContentLoaded', function () {
@@ -2849,45 +2849,44 @@
         }
 
         // Função para buscar os dados na API usando o parâmetro "barcode"
-        // Função para buscar os dados na API usando o parâmetro "barcode"
-        // Função para buscar os dados na API usando o parâmetro "barcode"
-function fetchDataAndSave(barcode) {
-    const url = `https://script.google.com/macros/s/AKfycbzKYGZrUUNZ30xMZb3S4Qg3BPg99X4RQTPriZ1bXhC53hGkX5Nk196TJoU-9OyGt_CC/exec?barcode=${barcode}`;
-    console.log("Código de barras enviado para a API: ", barcode);  // Log do valor enviado
 
-    fetch(url)
-        .then(response => {
-            console.log('Status da resposta da API: ', response.status); // Log do status da resposta
-            if (!response.ok) {
-                throw new Error('Erro na requisição: ' + response.statusText);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Dados recebidos:', data);  // Log dos dados recebidos da API
+        function fetchDataAndSave(barcode) {
+            const url = `https://script.google.com/macros/s/AKfycbzKYGZrUUNZ30xMZb3S4Qg3BPg99X4RQTPriZ1bXhC53hGkX5Nk196TJoU-9OyGt_CC/exec?barcode=${barcode}`;
+            console.log("Código de barras enviado para a API: ", barcode);  // Log do valor enviado
 
-            if (data.status === 'success' && data.data) {
-                const fetchedCracha = data.data.cracha.toString().trim();
-                const barcodeToCheck = barcode.trim();
-                console.log("Cracha comparado: ", fetchedCracha, " Barcode recebido: ", barcodeToCheck);  // Log para ver os valores sendo comparados
+            fetch(url)
+                .then(response => {
+                    console.log('Status da resposta da API: ', response.status); // Log do status da resposta
+                    if (!response.ok) {
+                        throw new Error('Erro na requisição: ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Dados recebidos:', data);  // Log dos dados recebidos da API
 
-                if (fetchedCracha === barcodeToCheck) {
-                    saveDataToSheet(data.data);  // Salva os dados e exibe a mensagem de sucesso
-                } else {
-                    showFeedback('Código de barras não encontrado.', 'warning');
-                    console.log("Código de barras não encontrado.");  // Log se não encontrar o código
-                }
-            } else {
-                // Caso o status não seja 'success' ou o campo 'data' esteja vazio, trata como não encontrado
-                showFeedback('Código de barras não encontrado.', 'warning');
-                console.log("Código de barras não encontrado, status ou data ausente.");  // Log de erro específico
-            }
-        })
-        .catch(error => {
-            console.error('Erro ao buscar dados:', error);  // Log de erro geral
-            showFeedback('Erro ao buscar dados.', 'error');
-        });
-}
+                    if (data.status === 'success' && data.data) {
+                        const fetchedCracha = data.data.cracha.toString().trim();
+                        const barcodeToCheck = barcode.trim();
+                        console.log("Cracha comparado: ", fetchedCracha, " Barcode recebido: ", barcodeToCheck);  // Log para ver os valores sendo comparados
+
+                        if (fetchedCracha === barcodeToCheck) {
+                            saveDataToSheet(data.data);  // Salva os dados e exibe a mensagem de sucesso
+                        } else {
+                            showFeedback('Código de barras não encontrado.', 'warning');
+                            console.log("Código de barras não encontrado.");  // Log se não encontrar o código
+                        }
+                    } else {
+                        // Caso o status não seja 'success' ou o campo 'data' esteja vazio, trata como não encontrado
+                        showFeedback('Código de barras não encontrado.', 'warning');
+                        console.log("Código de barras não encontrado, status ou data ausente.");  // Log de erro específico
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar dados:', error);  // Log de erro geral
+                    showFeedback('Erro ao buscar dados.', 'error');
+                });
+        }
 
 
 
