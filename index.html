@@ -2811,7 +2811,7 @@
                 });
         }
          
-        ///////////////////////////////////////////////////////////////Status////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      ///////////////////////////////////////////////////////////////Status////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // Inicia a captura do input do código de barras
         document.addEventListener('DOMContentLoaded', function () {
@@ -2849,35 +2849,51 @@
         }
 
         // Função para buscar os dados na API usando o parâmetro "barcode"
-        function fetchDataAndSave(barcode) {
-            const url = `https://script.google.com/macros/s/AKfycbxeZiXJdRTES3FKUNSk0Qf7xC8HEAouQKdJdArmLHvDhGbu54SZ-NgGh-WHi291RU8_/exec?barcode=${barcode}`;
-            fetch(url)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Erro na requisição: ' + response.statusText);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Dados recebidos:', data);
-                    // Se o registro foi encontrado (data não é vazio e possui propriedade "cracha")
-                    if (data && data.cracha) {
-                        saveDataToSheet(data); // Salva os dados e exibe a mensagem de sucesso
-                       
-                    } else {
-                        // Exibe "Código de barras não encontrado" se o cracha não for encontrado
-                        showFeedback('Código de barras não encontrado.', 'warning');
-                    }
-                })
-                .catch(error => {
-                    console.error('Erro ao buscar dados:', error);
-                    showFeedback('Erro ao buscar dados.', 'error');
-                });
-        }
+        // Função para buscar os dados na API usando o parâmetro "barcode"
+        // Função para buscar os dados na API usando o parâmetro "barcode"
+function fetchDataAndSave(barcode) {
+    const url = `https://script.google.com/macros/s/AKfycbzKYGZrUUNZ30xMZb3S4Qg3BPg99X4RQTPriZ1bXhC53hGkX5Nk196TJoU-9OyGt_CC/exec?barcode=${barcode}`;
+    console.log("Código de barras enviado para a API: ", barcode);  // Log do valor enviado
+
+    fetch(url)
+        .then(response => {
+            console.log('Status da resposta da API: ', response.status); // Log do status da resposta
+            if (!response.ok) {
+                throw new Error('Erro na requisição: ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Dados recebidos:', data);  // Log dos dados recebidos da API
+
+            if (data.status === 'success' && data.data) {
+                const fetchedCracha = data.data.cracha.toString().trim();
+                const barcodeToCheck = barcode.trim();
+                console.log("Cracha comparado: ", fetchedCracha, " Barcode recebido: ", barcodeToCheck);  // Log para ver os valores sendo comparados
+
+                if (fetchedCracha === barcodeToCheck) {
+                    saveDataToSheet(data.data);  // Salva os dados e exibe a mensagem de sucesso
+                } else {
+                    showFeedback('Código de barras não encontrado.', 'warning');
+                    console.log("Código de barras não encontrado.");  // Log se não encontrar o código
+                }
+            } else {
+                // Caso o status não seja 'success' ou o campo 'data' esteja vazio, trata como não encontrado
+                showFeedback('Código de barras não encontrado.', 'warning');
+                console.log("Código de barras não encontrado, status ou data ausente.");  // Log de erro específico
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados:', error);  // Log de erro geral
+            showFeedback('Erro ao buscar dados.', 'error');
+        });
+}
+
+
 
         // Função para salvar os dados na planilha "base_dados_status"
         function saveDataToSheet(data) {
-            const urlPost = 'https://script.google.com/macros/s/AKfycbxeZiXJdRTES3FKUNSk0Qf7xC8HEAouQKdJdArmLHvDhGbu54SZ-NgGh-WHi291RU8_/exec';
+            const urlPost = 'https://script.google.com/macros/s/AKfycbzKYGZrUUNZ30xMZb3S4Qg3BPg99X4RQTPriZ1bXhC53hGkX5Nk196TJoU-9OyGt_CC/exec';
             const postData = {
                 method: 'POST',
                 mode: 'no-cors',
@@ -2892,7 +2908,7 @@
                     setor: data.Setor,
                     predio: data.Predio,
                     turnos: data.turnos,
-                    
+
                 })
             };
             fetch(urlPost, postData)
@@ -2908,8 +2924,8 @@
                 });
         }
         // Chama as funções quando a página carregar
-        
-    
+
+
         ///////////////////////////////////////////////////////////////CALENDARIO CONTAINER4////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // Função para buscar o evento do dia na API de eventos
