@@ -2720,14 +2720,17 @@
         // Inicia a captura do input do código de barras
         document.addEventListener('DOMContentLoaded', function () {
             const barcodeInput = document.querySelector('.barcode-field input[type="text"]');
-            barcodeInput.addEventListener('input', function (event) {
+
+            barcodeInput.addEventListener('keypress', function (event) {
                 const barcodeValue = event.target.value;
-                if (barcodeValue) {
-                    fetchDataAndSave(barcodeValue);
+
+                // Verifica se a tecla pressionada foi 'Enter' (tecla que o leitor geralmente usa após o código de barras)
+                if (event.key === 'Enter' && barcodeValue) {
+                    console.log("Código de barras enviado para a API: ", barcodeValue);  // Log do valor enviado
+                    fetchDataAndSave(barcodeValue);  // Envia o código para a API
+                    barcodeInput.value = '';  // Limpa o campo de entrada após o envio
                 }
             });
-
-            // Busca o evento do dia ao carregar a página
             buscarEventoDoDia();
         });
 
