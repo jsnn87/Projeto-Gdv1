@@ -2734,6 +2734,7 @@
             buscarEventoDoDia();
         });
 
+
         // Função para exibir feedback visual
         function showFeedback(message, type) {
             const feedback = document.getElementById('feedback');
@@ -2751,14 +2752,14 @@
                 feedback.style.opacity = '0';
                 setTimeout(() => {
                     feedback.style.display = 'none';
-                }, 100); // Tempo do fade out
+                }, 1000); // Tempo do fade out
             }, 2000); // Tempo de exibição do feedback
         }
 
         // Função para buscar os dados na API usando o parâmetro "barcode"
 
         function fetchDataAndSave(barcode) {
-            const url = `https://script.google.com/macros/s/AKfycbzSsGMmXn_8X88rKaotRLiokGhfFivMZXLDnghCUgbM9YOWbGtKg4K7JULnd9yollcN/exec?barcode=${barcode}`;
+            const url = `https://script.google.com/macros/s/AKfycbyd2Yi33qBj6rh3Hb2nx4IlM-697nJpOdQQRpamjHNdVujMkTEizhMMgq31HY2WBt8i/exec?barcode=${barcode}`;
             console.log("Código de barras enviado para a API: ", barcode);  // Log do valor enviado
 
             fetch(url)
@@ -2799,7 +2800,7 @@
 
         // Função para salvar os dados na planilha "base_dados_status"
         function saveDataToSheet(data) {
-            const urlPost = 'https://script.google.com/macros/s/AKfycbzSsGMmXn_8X88rKaotRLiokGhfFivMZXLDnghCUgbM9YOWbGtKg4K7JULnd9yollcN/exec';
+            const urlPost = 'https://script.google.com/macros/s/AKfycbyd2Yi33qBj6rh3Hb2nx4IlM-697nJpOdQQRpamjHNdVujMkTEizhMMgq31HY2WBt8i/exec';
             const postData = {
                 method: 'POST',
                 mode: 'no-cors',
@@ -2846,7 +2847,7 @@
                 "LEAN": "#FF8C00",
                 "QUALIDADE": "#00CC00",
                 "RH": "#FF0080",
-                "CRONO": "#BC8F8F",
+                "CRONO": "#BC8F8F", 
                 "MANUTENÇÃO": "#f3d500",
                 "P5S": "#6959CD",
                 "LABORATÓRIO": "#006600",
@@ -2857,6 +2858,7 @@
                 "FERIADO": "#000000",
                 "-": "#ccc"  // Cor padrão caso não haja mapeamento
             };
+            ////////////Reaproveita API do calendario por isso não tem script////////////////////////////
             const url = 'https://script.google.com/macros/s/AKfycbz4dnhdAYGL_HdHMO9ypsvNR7LmGxplWuyxNGllpzyI3PjKSD3zsdQz5_4AS8SE0mbL/exec';
             fetch(url)
                 .then(response => {
