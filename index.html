@@ -1315,15 +1315,31 @@
         }
 
         .feedback.success {
-            color: #4CAF50;
+            background-color: #4CAF50;
+            /* Verde */
+            color: white;
+            /* Texto em branco */
         }
 
         .feedback.warning {
-            color: #FFC107;
+            background-color: #FFC107;
+            /* Amarelo */
+            color: black;
+            /* Texto em preto */
         }
 
         .feedback.error {
-            color: #f44336;
+            background-color: #f44336;
+            /* Vermelho */
+            color: white;
+            /* Texto em branco */
+        }
+
+        .feedback.info {
+            background-color: #e90404;
+            /* Azul */
+            color: white;
+            /* Texto em branco */
         }
         .quadrados-container {
             display: flex;
@@ -2713,9 +2729,7 @@
             calendarDiv.innerHTML = table;
         }
 
-
-        
-         ///////////////////////////////////////////////////////////////Status////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////Status////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // Inicia a captura do input do código de barras
         document.addEventListener('DOMContentLoaded', function () {
@@ -2734,13 +2748,40 @@
             buscarEventoDoDia();
         });
 
+        function handleApiResponse(data) {
+            if (data.status === 'error') {
+                let message = '';
+                let feedbackType = ''; // Inicializa o tipo de feedback
 
-        // Função para exibir feedback visual
+                if (data.message === 'Gerenciamento diário Fechado') {
+                    message = 'Gerenciamento diário Fechado';
+                    feedbackType = 'info';  // Azul para "Gerenciamento diário Fechado"
+                } else if (data.message === 'Crachá não encontrado.') {
+                    message = 'Crachá não encontrado';
+                    feedbackType = 'warning'; // Amarelo para "Crachá não encontrado"
+                } else {
+                    message = 'Erro ao buscar dados';
+                    feedbackType = 'error'; // Vermelho para "Erro ao buscar dados"
+                }
+
+                showFeedback(message, feedbackType); // Exibe a mensagem com o tipo adequado
+            } else {
+                // Caso contrário, exibe a mensagem de sucesso com cor verde
+                showFeedback('Dados salvos com sucesso', 'success');
+            }
+        }
+
+        // Função para exibir feedback
         function showFeedback(message, type) {
             const feedback = document.getElementById('feedback');
             feedback.textContent = message;
-            feedback.classList.remove('success', 'warning', 'error');
+
+            // Remove as classes anteriores
+            feedback.classList.remove('success', 'warning', 'error', 'info');
+
+            // Adiciona a classe correspondente ao tipo de feedback
             feedback.classList.add(type);
+
             feedback.style.display = 'block';
             feedback.style.opacity = '1';
 
@@ -2759,7 +2800,7 @@
         // Função para buscar os dados na API usando o parâmetro "barcode"
 
         function fetchDataAndSave(barcode) {
-            const url = `https://script.google.com/macros/s/AKfycbyd2Yi33qBj6rh3Hb2nx4IlM-697nJpOdQQRpamjHNdVujMkTEizhMMgq31HY2WBt8i/exec?barcode=${barcode}`;
+            const url = `https://script.google.com/macros/s/AKfycby1eUU4oRedbbIpOieGivi2S5nFCHuwIAGNn1Zxk27_RaWudhVDwmcqppvI8l9r_Nkw9Q/exec?barcode=${barcode}`;
             console.log("Código de barras enviado para a API: ", barcode);  // Log do valor enviado
 
             fetch(url)
@@ -2773,7 +2814,10 @@
                 .then(data => {
                     console.log('Dados recebidos:', data);  // Log dos dados recebidos da API
 
-                    if (data.status === 'success' && data.data) {
+                    if (data.status === 'error') {
+                        // Chama a função para exibir feedback conforme o tipo de erro
+                        handleApiResponse(data);  // Exibe a mensagem adequada com base no status e mensagem de erro
+                    } else if (data.status === 'success' && data.data) {
                         const fetchedCracha = data.data.cracha.toString().trim();
                         const barcodeToCheck = barcode.trim();
                         console.log("Cracha comparado: ", fetchedCracha, " Barcode recebido: ", barcodeToCheck);  // Log para ver os valores sendo comparados
@@ -2781,26 +2825,24 @@
                         if (fetchedCracha === barcodeToCheck) {
                             saveDataToSheet(data.data);  // Salva os dados e exibe a mensagem de sucesso
                         } else {
-                            showFeedback('Código de barras não encontrado.', 'warning');
+                            handleApiResponse({ status: 'error', message: 'Crachá não encontrado.' });  // Exibe a mensagem de erro se o código não for encontrado
                             console.log("Código de barras não encontrado.");  // Log se não encontrar o código
                         }
                     } else {
                         // Caso o status não seja 'success' ou o campo 'data' esteja vazio, trata como não encontrado
-                        showFeedback('Código de barras não encontrado.', 'warning');
+                        handleApiResponse({ status: 'error', message: 'Crachá não encontrado.' });  // Exibe a mensagem de erro se não encontrar dados válidos
                         console.log("Código de barras não encontrado, status ou data ausente.");  // Log de erro específico
                     }
                 })
                 .catch(error => {
                     console.error('Erro ao buscar dados:', error);  // Log de erro geral
-                    showFeedback('Erro ao buscar dados.', 'error');
+                    handleApiResponse({ status: 'error', message: 'Erro ao buscar dados.' });  // Exibe erro genérico ao buscar dados
                 });
         }
 
-
-
         // Função para salvar os dados na planilha "base_dados_status"
         function saveDataToSheet(data) {
-            const urlPost = 'https://script.google.com/macros/s/AKfycbyd2Yi33qBj6rh3Hb2nx4IlM-697nJpOdQQRpamjHNdVujMkTEizhMMgq31HY2WBt8i/exec';
+            const urlPost = 'https://script.google.com/macros/s/AKfycby1eUU4oRedbbIpOieGivi2S5nFCHuwIAGNn1Zxk27_RaWudhVDwmcqppvI8l9r_Nkw9Q/exec';
             const postData = {
                 method: 'POST',
                 mode: 'no-cors',
@@ -2830,8 +2872,6 @@
                     showFeedback('Erro ao salvar dados.', 'error');
                 });
         }
-        // Chama as funções quando a página carregar
-
 
         ///////////////////////////////////////////////////////////////CALENDARIO CONTAINER4////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
