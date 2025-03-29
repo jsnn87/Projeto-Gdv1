@@ -3004,7 +3004,7 @@
         // Função para buscar os dados na API usando o parâmetro "barcode"
 
         function fetchDataAndSave(barcode) {
-            const url = `https://script.google.com/macros/s/AKfycbzGhQ381Kt_E0T_VSWFGMv1_HOmiS6NqqrSoL4f0nTjYwTeNazqjUMAiQhlOF8vTi_6/exec?barcode=${barcode}`;
+            const url = `https://script.google.com/macros/s/AKfycbyRzLREfrsFoLiv2yRrcKimO3jTEXwiRFRnqmluuwZJIfaVkHmXrJkrVrgsMVL8xugl/exec?barcode=${barcode}`;
             console.log("Código de barras enviado para a API: ", barcode);  // Log do valor enviado
 
             fetch(url)
@@ -3046,7 +3046,7 @@
 
         // Função para salvar os dados na planilha "base_dados_status"
         function saveDataToSheet(data) {
-            const urlPost = 'https://script.google.com/macros/s/AKfycbzGhQ381Kt_E0T_VSWFGMv1_HOmiS6NqqrSoL4f0nTjYwTeNazqjUMAiQhlOF8vTi_6/exec';
+            const urlPost = 'https://script.google.com/macros/s/AKfycbyRzLREfrsFoLiv2yRrcKimO3jTEXwiRFRnqmluuwZJIfaVkHmXrJkrVrgsMVL8xugl/exec';
             const postData = {
                 method: 'POST',
                 mode: 'no-cors',
