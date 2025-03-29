@@ -2933,6 +2933,7 @@
             calendarDiv.innerHTML = table;
         }
 
+
 ///////////////////////////////////////////////////////////////Status////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // Inicia a captura do input do código de barras
@@ -3004,7 +3005,7 @@
         // Função para buscar os dados na API usando o parâmetro "barcode"
 
         function fetchDataAndSave(barcode) {
-            const url = `https://script.google.com/macros/s/AKfycbz6XnqWH31W55nbCdI3XB1ub3S6QCG7ge3jw9L1cMwDp3oeJKNRTp5WrRl7n_6lZgimOg/exec?barcode=${barcode}`;
+            const url = `https://script.google.com/macros/s/AKfycbyrSe11utS7I9Y8NO_lhdaBF2Bi_5MWXjVfGPLvBl2vpziNz9I58A4ckzKVzccd6kmx/exec?barcode=${barcode}`;
             console.log("Código de barras enviado para a API: ", barcode);  // Log do valor enviado
 
             fetch(url)
@@ -3046,7 +3047,7 @@
 
         // Função para salvar os dados na planilha "base_dados_status"
         function saveDataToSheet(data) {
-            const urlPost = 'https://script.google.com/macros/s/AKfycbz6XnqWH31W55nbCdI3XB1ub3S6QCG7ge3jw9L1cMwDp3oeJKNRTp5WrRl7n_6lZgimOg/exec';
+            const urlPost = 'https://script.google.com/macros/s/AKfycbyrSe11utS7I9Y8NO_lhdaBF2Bi_5MWXjVfGPLvBl2vpziNz9I58A4ckzKVzccd6kmx/exec';
             const postData = {
                 method: 'POST',
                 mode: 'no-cors',
@@ -3077,7 +3078,7 @@
                 });
         }
 
-        ///////////////////////////////////////////////////////////////CALENDARIO CONTAINER4////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////// Calendario do dia - Status/////////////////////////////////////////////////////////////
 
         // Função para buscar o evento do dia na API de eventos
         function buscarEventoDoDia() {
@@ -3102,7 +3103,7 @@
                 "FERIADO": "#000000",
                 "-": "#ccc"  // Cor padrão caso não haja mapeamento
             };
-            ////////////Reaproveita API do calendario por isso não tem script////////////////////////////
+            
             const url = 'https://script.google.com/macros/s/AKfycbz4dnhdAYGL_HdHMO9ypsvNR7LmGxplWuyxNGllpzyI3PjKSD3zsdQz5_4AS8SE0mbL/exec';
             fetch(url)
                 .then(response => {
@@ -3149,9 +3150,12 @@
                 });
         }
 
+         ///////////////////////////////////////////////// Presença do dia ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
         // Função para buscar os dados da aba 'Calendário' (nomes)
         async function fetchNames() {
-            const url = 'https://script.google.com/macros/s/AKfycbz90XAbUCJWOTUTOjdeLAxrqcWgr-kGwijFtyR7pucNVyWd8R9xmrwVcXldKVDTX96x/exec?action=load'; // URL para carregar os nomes da aba 'Calendário'
+            const url = 'https://script.google.com/macros/s/AKfycbyFB2Lf8uT3mvr4dK2ufCZMyglBdhouc-6pLaBuIccAWJvTZi9QUEhYv75RMlXf_hUq/exec?action=load'; // URL para carregar os nomes da aba 'Calendário'
             try {
                 const response = await fetch(url);
                 const data = await response.json();
@@ -3176,7 +3180,7 @@
 
         // Função para aplicar a cor verde aos quadrados de hoje
         async function applyColor() {
-            const url = 'https://script.google.com/macros/s/AKfycbz90XAbUCJWOTUTOjdeLAxrqcWgr-kGwijFtyR7pucNVyWd8R9xmrwVcXldKVDTX96x/exec?action=color'; // URL para aplicar cor
+            const url = 'https://script.google.com/macros/s/AKfycbyFB2Lf8uT3mvr4dK2ufCZMyglBdhouc-6pLaBuIccAWJvTZi9QUEhYv75RMlXf_hUq/exec?action=color'; // URL para aplicar cor
             try {
                 const response = await fetch(url);
                 const data = await response.json();
@@ -3198,6 +3202,8 @@
                 console.error('Erro ao aplicar cor:', error);
             }
         }
+
+        ////////////////////////////////////////////// Historico ////////////////////////////////////////////////////////
 
         // Chama as funções quando a página carregar
         window.onload = () => {
@@ -3236,7 +3242,7 @@
             try {
                 document.getElementById('table-container').innerHTML = '<div class="loading"></div>';
                 
-                const response = await fetch('https://script.google.com/macros/s/AKfycbydn6WrxAYMnw_paTwYeHnfH8b7PJs7IqrUGVD8SA8pNX_BdUllfr34_w-ULmbFA3kS/exec');
+                const response = await fetch('https://script.google.com/macros/s/AKfycbyrQHwDJxexVSvf8zzD1au6_2y-3rnybawYkMFSsNX-rRMt-zUohlucvYYITzFpYWw/exec');
                 const jsonData = await response.json();
                 
                 if (jsonData.success && jsonData.data) {
