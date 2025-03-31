@@ -72,13 +72,30 @@
         }
 
         .container3 {
-            flex: 2.5;
+            flex: 0 0 600px;
+            /* Largura fixa */
+            min-width: 270px;
+            max-width: 250px;
+            height: 100%;
+            /* Altura total do container pai */
             font-size: 12px;
             text-align: center;
             padding: 3%;
-           gap: 1px;
-            /* Remove o padding interno */
+            gap: 1px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(128, 128, 128, 0.3);
+            overflow-y: hidden;
+            /* Scroll vertical se necessário */
+        }
 
+        @media (max-width: 768px) {
+            .container3 {
+                flex: 0 0 200px;
+                min-width: 200px;
+                max-width: 200px;
+            }
         }
 
         .container4 {
@@ -1440,7 +1457,7 @@
         .dynamic-table th,
         .dynamic-table td {
             border: 1px solid #ddd;
-            padding: 8px;
+            padding: 6px;
             text-align: center;
             white-space: nowrap;
         }
