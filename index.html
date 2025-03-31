@@ -27,6 +27,7 @@
         .main-container {
             display: flex;
             height: 95vh;
+            overflow-x: hidden;
         }
 
         .content {
@@ -72,7 +73,7 @@
         }
 
         .container3 {
-            flex: 0 0 600px;
+            flex: 0 0 630px;
             /* Largura fixa */
             min-width: 270px;
             max-width: 250px;
@@ -90,16 +91,9 @@
             /* Scroll vertical se necessário */
         }
 
-        @media (max-width: 768px) {
-            .container3 {
-                flex: 0 0 200px;
-                min-width: 200px;
-                max-width: 200px;
-            }
-        }
-
         .container4 {
-            flex: 1;
+            flex: 1; /* Reduz o valor do flex (era 1) */
+            
         }
 
         .container5 {
@@ -157,6 +151,24 @@
             color: white;
            
         }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                /* Tamanho normal */
+            }
+
+            50% {
+                transform: scale(1.1);
+                /* Aumenta o tamanho em 10% */
+            }
+
+            100% {
+                transform: scale(1);
+                /* Volta ao tamanho normal */
+            }
+        }
+
         .container4 h2 {
             margin-top: 0;
             /* Remove a margem superior padrão */
@@ -170,7 +182,7 @@
         }
 
         .container4 #eventoDoDia {
-            font-size: 40px;
+            font-size: 50px;
             /* Tamanho da fonte aumentado */
             font-weight: bold;
             /* Texto em negrito */
@@ -1141,8 +1153,8 @@
 
         /* Ajustes para o calendário */
         #calendar {
-            fflex: 1;
-            overflow: hidden;
+            flex: 1;
+            overflow: auto;
             margin-top: 20px;
         }
 
