@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -1108,14 +1109,6 @@
             z-index: 100;
         }
 
-        #data-hora-registro {
-            font-size: 14px;
-            color: gray;
-            margin-left: 10px;
-            font-style: italic;
-        }
-
-
         /* Container da página agenda */
         .agenda-container {
             display: flex;
@@ -1730,6 +1723,39 @@
             padding-left: 10px;
             text-align: center;
         }
+        #data-hora-registro {
+      font-size: 14px;
+      color: gray;
+      margin-left: 10px;
+      font-style: italic;
+    }
+
+    /* Estilos para barras de rolagem finas e vermelhas (crimson) */
+    ::-webkit-scrollbar {
+      width: 2px;
+      /* Largura da barra de rolagem */
+      height: 2px;
+      /* Altura da barra de rolagem horizontal */
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: rgba(220, 20, 60, 0.281);
+      /* Cor da barra de rolagem com 90% de opacidade (crimson) */
+      border-radius: 4px;
+      /* Bordas arredondadas */
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: rgba(139, 0, 0, 0.9);
+      /* Cor da barra de rolagem quando está sendo arrastada (darkred) */
+    }
+
+    ::-webkit-scrollbar-track {
+      background-color: rgba(241, 241, 241, 0.9);
+      /* Cor de fundo da trilha da barra com 90% de opacidade */
+      border-radius: 4px;
+      /* Bordas arredondadas da trilha */
+    }
     </style>
 </head>
 
@@ -2760,255 +2786,294 @@
         /////////////////// Acompanhamento////////////////////////////
 
         let dadosTabela = []; // Variável global para armazenar os dados da tabela
-        let cabecalho = []; // Variável global para armazenar o cabeçalho da tabela
+    let cabecalho = []; // Variável global para armazenar o cabeçalho da tabela
 
-        // Função para carregar os dados da API do Google Apps Script
-        async function carregarDadosPlanilha() {
-            const url = "https://script.google.com/macros/s/AKfycbwESLf8Xf98nhKuSM9xwDBg0PUdnWfISKSRydtUOHh4po135_d6zmpWC-AFee2N4UiMEw/exec"; // URL do Web App
+    function showPage(page) {
+      var sections = document.querySelectorAll('.page');
+      sections.forEach(function (section) {
+        section.classList.remove('active');
+      });
+      var activePage = document.getElementById(page);
+      activePage.classList.add('active');
+      var navItems = document.querySelectorAll('nav ul li');
+      navItems.forEach(function (item) {
+        item.classList.remove('active');
+      });
+      var activeNavItem = document.getElementById(page + "Nav");
+      activeNavItem.classList.add('active');
+    }
 
-            try {
-                const response = await fetch(url);
+    // Função para carregar os dados da API do Google Apps Script
+    async function carregarDadosPlanilha() {
+      const url = "https://script.google.com/macros/s/AKfycbwESLf8Xf98nhKuSM9xwDBg0PUdnWfISKSRydtUOHh4po135_d6zmpWC-AFee2N4UiMEw/exec"; // URL do Web App
 
-                if (!response.ok) {
-                    throw new Error(`Erro na requisição: ${response.status} ${response.statusText}`);
-                }
+      try {
+        const response = await fetch(url);
 
-                const data = await response.json();
-                dadosTabela = data; // Armazena os dados na variável global
-                cabecalho = Object.keys(data[0]); // Armazena o cabeçalho
-                console.log("Dados da API:", dadosTabela); // Debug
-                criarTabelaComSubtotal(dadosTabela); // Cria a tabela com subtotais
+        if (!response.ok) {
+          throw new Error(`Erro na requisição: ${response.status} ${response.statusText}`);
+        }
 
-            } catch (error) {
-                console.error("Erro ao carregar os dados da API:", error);
+        const data = await response.json();
+        dadosTabela = data; // Armazena os dados na variável global
+        cabecalho = Object.keys(data[0]); // Armazena o cabeçalho
+        console.log("Dados da API:", dadosTabela); // Debug
+        criarTabelaComSubtotal(dadosTabela); // Cria a tabela com subtotais
 
-                // Exibe uma mensagem de erro no container da tabela
-                const containerTabela = document.getElementById("tabela-producao");
-                containerTabela.innerHTML = `<p style="color: red; text-align: center;">Erro ao carregar os dados. Por favor, tente novamente mais tarde.</p>`;
-            } finally {
-                // Remove a animação de carregamento
-                const loadingAnimation = document.querySelector(".loading-animation2");
-                if (loadingAnimation) {
-                    loadingAnimation.style.display = "none";
-                }
+      } catch (error) {
+        console.error("Erro ao carregar os dados da API:", error);
+
+        // Exibe uma mensagem de erro no container da tabela
+        const containerTabela = document.getElementById("tabela-producao");
+        containerTabela.innerHTML = `<p style="color: red; text-align: center;">Erro ao carregar os dados. Por favor, tente novamente mais tarde.</p>`;
+      } finally {
+        // Remove a animação de carregamento
+        const loadingAnimation = document.querySelector(".loading-animation2");
+        if (loadingAnimation) {
+          loadingAnimation.style.display = "none";
+        }
+      }
+
+    }
+    // Função para carregar os dados da planilha
+    async function carregarDadosPlanilha2() {
+      const url = "https://script.google.com/macros/s/AKfycbz6wo1LkiwLOInDyNJA0LAx0NtuMmVQpDr4jOdhPS0w0mcd3SxLbiSMopwqySG9lfg5Dw/exec"; // URL do Web App
+
+      try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error(`Erro na requisição: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        console.log("Dados da API:", data); // Debug
+
+        // Exibir a data e hora ao lado do título
+        const dataHoraElement = document.getElementById("data-hora-registro");
+        if (dataHoraElement && data.lastUpdated) {
+          const dataFormatada = new Date(data.lastUpdated).toLocaleString(); // Formata a data e hora
+          dataHoraElement.textContent = `Última atualização: ${dataFormatada}`;
+        }
+
+      } catch (error) {
+        console.error("Erro ao carregar os dados da API:", error);
+
+        // Exibe uma mensagem de erro
+        const dataHoraElement = document.getElementById("data-hora-registro");
+        if (dataHoraElement) {
+          dataHoraElement.textContent = "Erro ao carregar a data e hora.";
+          dataHoraElement.style.color = "red";
+        }
+      }
+    }
+
+
+    // Função para criar a tabela com subtotais e total geral
+    function criarTabelaComSubtotal(dados) {
+      if (!dados || dados.length === 0) {
+        const containerTabela = document.getElementById("tabela-producao");
+        containerTabela.innerHTML = `<p style="color: gray; text-align: center;">Nenhum dado disponível para exibição.</p>`;
+        return;
+      }
+
+      const tabela = document.createElement("table");
+      const thead = document.createElement("thead");
+      const tbody = document.createElement("tbody");
+
+      // Cabeçalho da tabela
+      const trHead = document.createElement("tr");
+      const thToggle = document.createElement("th"); // Coluna para o ícone de toggle
+      thToggle.textContent = "Sub"; // Deixar vazio para o ícone
+      trHead.appendChild(thToggle);
+
+      // Filtra o cabeçalho para excluir a coluna "Marca"
+      cabecalho.forEach(coluna => {
+        if (coluna !== "Marcas") { // Não adiciona a coluna "Marcas"
+          const th = document.createElement("th");
+          th.textContent = coluna;
+          trHead.appendChild(th);
+        }
+      });
+      thead.appendChild(trHead);
+      tabela.appendChild(thead);
+
+      let totalGeral = {}; // Objeto para armazenar o total geral por coluna numérica
+
+      // Agrupa os dados por semana
+      const dadosPorSemana = {};
+      dados.forEach(linha => {
+        const semana = linha["Semana"];
+        if (!dadosPorSemana[semana]) {
+          dadosPorSemana[semana] = [];
+        }
+        dadosPorSemana[semana].push(linha);
+      });
+
+      // Preenche a tabela com os dados e subtotais
+      Object.keys(dadosPorSemana).sort((a, b) => a - b).forEach((semana, index) => {
+        const linhasDaSemana = dadosPorSemana[semana];
+
+        // Linha de subtotal
+        const trSubtotal = document.createElement("tr");
+        trSubtotal.setAttribute("data-semana", semana);
+        trSubtotal.style.fontWeight = "bold";
+
+        // Alternar a cor de fundo entre vermelho e cinza (baseado no índice da semana)
+        trSubtotal.style.backgroundColor = (index % 2 === 0) ? "rgba(220, 20, 60, 0.2)" : "#f0f0f0"; // Tom mais fraco de vermelho
+
+        const tdToggle = document.createElement("td");
+        const iconToggle = document.createElement("i");
+        iconToggle.classList.add("fas", "fa-angle-down", "toggle-icon");
+        iconToggle.onclick = () => toggleSemana(semana);
+        tdToggle.appendChild(iconToggle);
+        trSubtotal.appendChild(tdToggle);
+
+        cabecalho.forEach(coluna => {
+          if (coluna !== "Marcas") { // Não adiciona a coluna "Marcas"
+            const td = document.createElement("td");
+            if (coluna === "Semana") {
+              td.textContent = `Sem ${semana}`;
+            } else if (!isNaN(parseFloat(linhasDaSemana[0][coluna]))) {
+              // Soma os valores da coluna se forem numéricos
+              const subtotal = linhasDaSemana.reduce((acc, linha) => acc + parseFloat(linha[coluna] || 0), 0);
+
+              // Verifica se o subtotal é 0 e não exibe
+              td.textContent = subtotal !== 0 ? Math.round(subtotal) : ''; // Não exibe se for 0
+
+              totalGeral[coluna] = (totalGeral[coluna] || 0) + subtotal; // Acumula para o total geral
+            } else {
+              td.textContent = "";
             }
-        }
-
-        // Função para carregar os dados da planilha
-        async function carregarDadosPlanilha2() {
-            const url = "https://script.google.com/macros/s/AKfycbz6wo1LkiwLOInDyNJA0LAx0NtuMmVQpDr4jOdhPS0w0mcd3SxLbiSMopwqySG9lfg5Dw/exec"; // URL do Web App
-
-            try {
-                const response = await fetch(url);
-
-                if (!response.ok) {
-                    throw new Error(`Erro na requisição: ${response.status} ${response.statusText}`);
-                }
-
-                const data = await response.json();
-                console.log("Dados da API:", data); // Debug
-
-                // Exibir a data e hora ao lado do título
-                const dataHoraElement = document.getElementById("data-hora-registro");
-                if (dataHoraElement && data.lastUpdated) {
-                    const dataFormatada = new Date(data.lastUpdated).toLocaleString(); // Formata a data e hora
-                    dataHoraElement.textContent = `Última atualização: ${dataFormatada}`;
-                }
-
-            } catch (error) {
-                console.error("Erro ao carregar os dados da API:", error);
-
-                // Exibe uma mensagem de erro
-                const dataHoraElement = document.getElementById("data-hora-registro");
-                if (dataHoraElement) {
-                    dataHoraElement.textContent = "Erro ao carregar a data e hora.";
-                    dataHoraElement.style.color = "red";
-                }
-            }
-        }
-
-        // Função para criar a tabela com subtotais e total geral
-        function criarTabelaComSubtotal(dados) {
-            if (!dados || dados.length === 0) {
-                const containerTabela = document.getElementById("tabela-producao");
-                containerTabela.innerHTML = `<p style="color: gray; text-align: center;">Nenhum dado disponível para exibição.</p>`;
-                return;
-            }
-
-            const tabela = document.createElement("table");
-            const thead = document.createElement("thead");
-            const tbody = document.createElement("tbody");
-
-            // Cabeçalho da tabela
-            const trHead = document.createElement("tr");
-            const thToggle = document.createElement("th"); // Coluna para o ícone de toggle
-            thToggle.textContent = "Sub"; // Deixar vazio para o ícone
-            trHead.appendChild(thToggle);
-            cabecalho.forEach(coluna => {
-                const th = document.createElement("th");
-                th.textContent = coluna;
-                trHead.appendChild(th);
-            });
-            thead.appendChild(trHead);
-            tabela.appendChild(thead);
-
-            let totalGeral = {}; // Objeto para armazenar o total geral por coluna numérica
-
-            // Agrupa os dados por semana
-            const dadosPorSemana = {};
-            dados.forEach(linha => {
-                const semana = linha["Semana"];
-                if (!dadosPorSemana[semana]) {
-                    dadosPorSemana[semana] = [];
-                }
-                dadosPorSemana[semana].push(linha);
-            });
-
-            // Preenche a tabela com os dados e subtotais
-            Object.keys(dadosPorSemana).sort((a, b) => a - b).forEach(semana => {
-                const linhasDaSemana = dadosPorSemana[semana];
-
-                // Linha de subtotal
-                const trSubtotal = document.createElement("tr");
-                trSubtotal.setAttribute("data-semana", semana);
-                trSubtotal.style.fontWeight = "bold";
-                trSubtotal.style.backgroundColor = "#f0f0f0";
-
-                const tdToggle = document.createElement("td");
-                const iconToggle = document.createElement("i");
-                iconToggle.classList.add("fas", "fa-angle-down", "toggle-icon");
-                iconToggle.onclick = () => toggleSemana(semana);
-                tdToggle.appendChild(iconToggle);
-                trSubtotal.appendChild(tdToggle);
-
-                cabecalho.forEach(coluna => {
-                    const td = document.createElement("td");
-                    if (coluna === "Semana") {
-                        td.textContent = `Sem  ${semana}`;
-                    } else if (!isNaN(parseFloat(linhasDaSemana[0][coluna]))) {
-                        // Soma os valores da coluna se forem numéricos
-                        const subtotal = linhasDaSemana.reduce((acc, linha) => acc + parseFloat(linha[coluna] || 0), 0);
-                        td.textContent = Math.round(subtotal); // Exibe sem casas decimais
-                        totalGeral[coluna] = (totalGeral[coluna] || 0) + subtotal; // Acumula para o total geral
-                    } else {
-                        td.textContent = "";
-                    }
-                    trSubtotal.appendChild(td);
-                });
-                tbody.appendChild(trSubtotal);
-
-                // Linhas da semana (ocultas por padrão)
-                linhasDaSemana.forEach(linha => {
-                    const tr = document.createElement("tr");
-                    tr.setAttribute("data-semana", semana);
-                    tr.style.display = "none"; // Oculta as linhas detalhadas por padrão
-
-                    const tdEmpty = document.createElement("td");
-                    tdEmpty.textContent = ""; // Deixar vazio para alinhar com o ícone
-                    tr.appendChild(tdEmpty);
-
-                    cabecalho.forEach(coluna => {
-                        const td = document.createElement("td");
-                        if (!isNaN(parseFloat(linha[coluna]))) {
-                            td.textContent = Math.round(linha[coluna]); // Exibe sem casas decimais
-                        } else {
-                            td.textContent = linha[coluna];
-                        }
-                        tr.appendChild(td);
-                    });
-                    tbody.appendChild(tr);
-                });
-            });
-
-            // Linha de total geral
-            const trTotal = document.createElement("tr");
-            trTotal.classList.add("linha-total");
-
-            const tdVazio = document.createElement("td");
-            tdVazio.colSpan = 4; // Ocupa quatro colunas (ícone + "Semana" + "Marcas" + "Modelos")
-            tdVazio.textContent = "Total Geral";
-            trTotal.appendChild(tdVazio);
-
-            cabecalho.forEach(coluna => {
-                if (coluna !== "Semana" && coluna !== "Marcas" && coluna !== "Modelos" && !isNaN(parseFloat(totalGeral[coluna]))) {
-                    const td = document.createElement("td");
-                    td.textContent = Math.round(totalGeral[coluna]); // Exibe sem casas decimais
-                    trTotal.appendChild(td);
-                }
-            });
-
-            tbody.appendChild(trTotal); // Adiciona a linha de total geral
-
-            tabela.appendChild(tbody);
-
-            // Adicionar a tabela ao container
-            const containerTabela = document.getElementById("tabela-producao");
-            containerTabela.innerHTML = ""; // Limpa o conteúdo anterior
-            containerTabela.appendChild(tabela);
-        }
-
-        // Função para alternar o estado de exibição das linhas de uma semana
-        function toggleSemana(semana) {
-            const linhas = document.querySelectorAll(`[data-semana="${semana}"]`);
-            const primeiroElemento = linhas[0]; // Subtotal
-            const iconeToggle = primeiroElemento.querySelector(".toggle-icon");
-
-            linhas.forEach((linha, index) => {
-                if (index > 0) { // Ignorar a linha de subtotal
-                    if (linha.style.display === "none") {
-                        linha.style.display = "table-row";
-                        iconeToggle.classList.remove("fa-angle-up");
-                        iconeToggle.classList.add("fa-angle-down");
-                    } else {
-                        linha.style.display = "none";
-                        iconeToggle.classList.remove("fa-angle-down");
-                        iconeToggle.classList.add("fa-angle-up");
-                    }
-                }
-            });
-        }
-
-        // Função para filtrar a tabela
-        function filtrarTabela2(filtro) {
-            // Filtra os dados com base na coluna "Marcas"
-            const dadosFiltrados = dadosTabela.filter(linha => linha["Marcas"] === filtro);
-            console.log("Dados filtrados:", dadosFiltrados); // Debug
-
-            // Recria a tabela com os dados filtrados
-            criarTabelaComSubtotal(dadosFiltrados);
-
-            // Remove a classe 'selecionado' de todos os blocos
-            document.querySelectorAll('.acao-sidebar ul li').forEach(item => {
-                item.classList.remove('selecionado');
-            });
-
-            // Adiciona a classe 'selecionado' ao bloco clicado
-            const filtroElement = document.getElementById('filtro' + filtro);
-            if (filtroElement) {
-                filtroElement.classList.add('selecionado');
-            }
-        }
-
-        // Adiciona um evento de clique para cada item do menu
-        document.addEventListener('DOMContentLoaded', function () {
-            const menuItems = document.querySelectorAll('.acao-sidebar ul li');
-
-            menuItems.forEach(item => {
-                item.addEventListener('click', function () {
-                    // Remover a classe 'selecionado' de todos os itens
-                    menuItems.forEach(menuItem => {
-                        menuItem.classList.remove('selecionado');
-                    });
-
-                    // Adicionar a classe 'selecionado' ao item clicado
-                    this.classList.add('selecionado');
-                });
-            });
-
-            // Carrega os dados da planilha ao carregar a página
-            carregarDadosPlanilha();
-            carregarDadosPlanilha2();
+            trSubtotal.appendChild(td);
+          }
         });
+        tbody.appendChild(trSubtotal);
+
+        // Linhas da semana (ocultas por padrão)
+        linhasDaSemana.forEach(linha => {
+          const tr = document.createElement("tr");
+          tr.setAttribute("data-semana", semana);
+          tr.style.display = "none"; // Oculta as linhas detalhadas por padrão
+
+          const tdEmpty = document.createElement("td");
+          tdEmpty.textContent = ""; // Deixar vazio para alinhar com o ícone
+          tr.appendChild(tdEmpty);
+
+          cabecalho.forEach(coluna => {
+            if (coluna !== "Marcas") { // Não adiciona a coluna "Marcas"
+              const td = document.createElement("td");
+              if (!isNaN(parseFloat(linha[coluna]))) {
+                // Exibe apenas se o valor for diferente de 0
+                td.textContent = parseFloat(linha[coluna]) !== 0 ? Math.round(linha[coluna]) : ''; // Não exibe se for 0
+              } else {
+                td.textContent = linha[coluna];
+              }
+              tr.appendChild(td);
+            }
+          });
+          tbody.appendChild(tr);
+        });
+      });
+
+      // Linha de total geral
+      const trTotal = document.createElement("tr");
+      trTotal.classList.add("linha-total");
+
+      // Aplicando o estilo da cor de fundo crimson e texto branco
+      trTotal.style.backgroundColor = "crimson"; // Cor de fundo crimson
+      trTotal.style.color = "white"; // Cor do texto branca
+      trTotal.style.fontSize = "24px";
+
+      const tdVazio = document.createElement("td");
+      tdVazio.colSpan = 3; // Ocupa três colunas (ícone + "Semana" + "Marcas")
+      tdVazio.textContent = "Total Geral";
+      trTotal.appendChild(tdVazio);
+
+      // Adicionar totais das colunas relevantes até o Modelo
+      cabecalho.forEach(coluna => {
+        if (coluna !== "Marcas" && coluna !== "Semana" && coluna !== "Modelo" && !isNaN(parseFloat(totalGeral[coluna]))) {
+          const td = document.createElement("td");
+          // Verifica se o total é 0 e não exibe
+          td.textContent = totalGeral[coluna] !== 0 ? Math.round(totalGeral[coluna]) : ''; // Não exibe se for 0
+          trTotal.appendChild(td);
+        }
+      });
+
+      tbody.appendChild(trTotal); // Adiciona a linha de total geral
+
+      tabela.appendChild(tbody);
+
+      // Adicionar a tabela ao container
+      const containerTabela = document.getElementById("tabela-producao");
+      containerTabela.innerHTML = ""; // Limpa o conteúdo anterior
+      containerTabela.appendChild(tabela);
+    }
+
+
+
+    // Função para alternar o estado de exibição das linhas de uma semana
+    function toggleSemana(semana) {
+      const linhas = document.querySelectorAll(`[data-semana="${semana}"]`);
+      const primeiroElemento = linhas[0]; // Subtotal
+      const iconeToggle = primeiroElemento.querySelector(".toggle-icon");
+
+      linhas.forEach((linha, index) => {
+        if (index > 0) { // Ignorar a linha de subtotal
+          if (linha.style.display === "none") {
+            linha.style.display = "table-row";
+            iconeToggle.classList.remove("fa-angle-up");
+            iconeToggle.classList.add("fa-angle-down");
+          } else {
+            linha.style.display = "none";
+            iconeToggle.classList.remove("fa-angle-down");
+            iconeToggle.classList.add("fa-angle-up");
+          }
+        }
+      });
+    }
+
+    // Função para filtrar a tabela
+    function filtrarTabela2(filtro) {
+      // Filtra os dados com base na coluna "Marcas"
+      const dadosFiltrados = dadosTabela.filter(linha => linha["Marcas"] === filtro);
+      console.log("Dados filtrados:", dadosFiltrados); // Debug
+
+      // Recria a tabela com os dados filtrados
+      criarTabelaComSubtotal(dadosFiltrados);
+
+      // Remove a classe 'selecionado' de todos os blocos
+      document.querySelectorAll('.acao-sidebar ul li').forEach(item => {
+        item.classList.remove('selecionado');
+      });
+
+      // Adiciona a classe 'selecionado' ao bloco clicado
+      const filtroElement = document.getElementById('filtro' + filtro);
+      if (filtroElement) {
+        filtroElement.classList.add('selecionado');
+      }
+    }
+
+    // Adiciona um evento de clique para cada item do menu
+    document.addEventListener('DOMContentLoaded', function () {
+      const menuItems = document.querySelectorAll('.acao-sidebar ul li');
+
+      menuItems.forEach(item => {
+        item.addEventListener('click', function () {
+          // Remover a classe 'selecionado' de todos os itens
+          menuItems.forEach(menuItem => {
+            menuItem.classList.remove('selecionado');
+          });
+
+          // Adicionar a classe 'selecionado' ao item clicado
+          this.classList.add('selecionado');
+        });
+      });
+
+      // Carrega os dados da planilha ao carregar a página
+      carregarDadosPlanilha();
+      carregarDadosPlanilha2();
+    });
 
 
 
